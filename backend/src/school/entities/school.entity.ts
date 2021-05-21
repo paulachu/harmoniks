@@ -5,10 +5,13 @@ export class School {
     
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column()
     name: string;
+
     @Column()
     domain: string;
-    @OneToMany(type => User, user => user.school_id)
+
+    @OneToMany(type => User, user => user.school)
     users: User[]
 }

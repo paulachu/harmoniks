@@ -16,11 +16,11 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({default: false})
   isAdmin: boolean;
 
   @ManyToOne(type => School, school => school.users)
-  school_id: number;
+  school: number;
 
   @Column({ nullable: true })
   debt: number;

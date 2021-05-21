@@ -18,6 +18,7 @@ export class UsersService {
   create(createUserDto: CreateUserDto): Promise<User> {
     return this.usersRepository.save(createUserDto).catch(err =>
     {
+      this.logger.error(err);
       throw new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
     });
   }
