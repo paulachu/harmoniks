@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import * as crypto from 'crypto';
 import { School } from '../../school/entities/school.entity';
+import { Skill } from 'src/skills/entities/skill.entity';
 
 @Entity()
 export class User {
@@ -25,6 +26,7 @@ export class User {
   @Column({ nullable: true })
   debt: number;
 
+  @ManyToMany(type => Skill, skill => skill.users)
   @Column({ nullable: true })
   skills: string;
 
