@@ -6,7 +6,6 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import * as crypto from 'crypto';
@@ -33,18 +32,18 @@ export class User {
   @Column()
   password: string;
 
-  @Column({default: false})
+  @Column({ default: false })
   isAdmin: boolean;
 
-  @ManyToOne(type => School, (school) => school.users)
+  @ManyToOne((type) => School, (school) => school.users)
   @JoinColumn()
   school: School;
 
   @Column({ nullable: true })
   debt: number;
 
-  @ManyToMany(type => Skill, (skill) => skill.users, { eager: true })
-  @JoinTable({name: "user_skills"})
+  @ManyToMany((type) => Skill, (skill) => skill.users, { eager: true })
+  @JoinTable({ name: 'user_skills' })
   @Column({ nullable: true })
   skills: string;
 
@@ -57,10 +56,9 @@ export class User {
   @Column({ nullable: true })
   hopper_link: string;
 
-  @ManyToMany(type => Request, request => request.user_from)
+  @ManyToMany((type) => Request, (request) => request.user_from)
   my_requests: Request[];
 
-  @ManyToMany(type => User, (user) => user.helps)
+  @ManyToMany((type) => User, (user) => user.helps)
   helps: Request[];
-
 }
