@@ -1,26 +1,20 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { DiscordModule, TransformPipe, ValidationPipe } from 'discord-nestjs';
-import { BotGateway } from './bot-gateway';
+import { BotGateway } from './bot.gateway';
 import { BotService } from './bot.service';
+import { BotController } from './bot.controller';
 
 @Module({
-  imports: [
+  controllers: [BotController],
+  imports: [HttpModule,
     DiscordModule.forRoot({
       token: 'ODQ1NTUyNzcyNjY0NjU1ODgy.YKioYg.ppLY8JSQHfMLXKaPgN7HFZ2tLeY',
-      commandPrefix: '!',
-      allowGuilds: ['745366351929016363'],
-      denyGuilds: ['520622812742811698'],
-      allowCommands: [
-        {
-          name: 'some',
-          channels: ['745366352386326572'],
-          users: ['261863053329563648'],
-          channelType: ['dm']
-        },
-      ],
+      commandPrefix: '$',
+      allowGuilds: ['845236496554131456'],
+      denyGuilds: [''],
       webhook: {
-        webhookId: 'your_webhook_id',
-        webhookToken: 'your_webhook_token',
+        webhookId: '845667625510109225',
+        webhookToken: 'Rpzvq1v5mVLjZFbqPQKlGOEy-aJ7vRSxopRMLPUyEzh0AYS36HjKPq4mCuQn5sCyeBnv',
       },
       usePipes: [TransformPipe, ValidationPipe],
       // and other discord options

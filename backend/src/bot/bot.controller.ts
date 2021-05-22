@@ -1,7 +1,8 @@
-import { Controller } from '@nestjs/common';
-import { BotService } from './bot.service';
+import { Controller, Get, Req } from '@nestjs/common';
+import { BotGateway } from './bot.gateway';
 
 @Controller('bot')
 export class BotController {
-  constructor(private readonly botService: BotService) {}
+  constructor(private readonly botGateway: BotGateway) {}
+
 }
