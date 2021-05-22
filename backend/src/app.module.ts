@@ -8,11 +8,12 @@ import { AuthModule } from './auth/auth.module';
 import { SchoolModule } from './school/school.module';
 import { SkillsModule } from './skills/skills.module';
 import { RequestsModule } from './requests/requests.module';
+import { BotModule } from './bot/bot.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true,
-  }), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule],
+  }), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule, BotModule],
   controllers: [AppController],
   providers: [AppService],
 })

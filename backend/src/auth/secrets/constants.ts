@@ -1,3 +1,3 @@
 export const jwtConstants = {
-  secret: 'secretKey'
+  secret: 'JWT-keyHarmoniks'
 }
