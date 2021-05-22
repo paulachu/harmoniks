@@ -1,9 +1,14 @@
-import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import * as crypto from 'crypto';
 import { School } from '../../school/entities/school.entity';
 
 @Entity()
 export class User {
+  @BeforeInsert()
+  hashPassword() {
+    this.password = crypto.createHmac('sha256', this.password).digest('hex');
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -37,9 +42,5 @@ export class User {
   @Column({ nullable: true })
   hopper_link: string;
 
-  @BeforeInsert()
-  hashPassword() {
-    this.password = crypto.createHmac('sha256', this.password).digest('hex');
-  }
 
 }

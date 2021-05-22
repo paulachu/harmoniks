@@ -10,21 +10,15 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   constructor(private authService: AuthService) {
     super({
-      usernameField: 'mail'
+      usernameField: 'email'
     });
   }
 
-  /**
-   * Overriding the validate function to validate the user to give him access through the passport strategy
-   * @param mail : string: User email
-   * @param password: string: User password
-   */
-  async validate(mail: string, password: string): Promise<any> {
-    /*const user = await this.authService.validateLogin(mail, password);
+  async validate(email: string, password: string): Promise<any> {
+    const user = await this.authService.validateLogin(email, password);
     if (!user) {
       throw new UnauthorizedException();
     }
-    return user;*/
-    throw new NotImplementedException('NaN', 'Nan');
+    return user;
   }
 }
