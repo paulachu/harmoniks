@@ -1,0 +1,94 @@
+.signup {
+    width: 100vw;
+    height: 90vh;
+    padding-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-wrapper {
+        width: 70%;
+        height: 80%;
+        background: $colorA;
+        border-radius: 10px;
+        color: $colorForm;
+        display: flex;
+        flex-direction: column;
+        h1 {
+            text-align: center;
+        }
+        form {
+            padding: 0% 5%;
+            display: flex;
+            height: 70%;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 5%;
+            * {
+                flex: 1 1 40%;
+            }
+            div input{
+                width: 100%;
+                height: 2ch;
+                padding: 10px;
+                font-size: 1.1em;
+                font-style: italic;
+                border-radius: 10px;
+                border : 0px;
+            }
+            div input:focus {
+                outline-color: $colorA;
+            }
+
+            div.submit {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+        }
+        button {
+            font-size: 1.75rem;
+            padding : 0.5rem 1.5rem;
+            border: 0px;
+            border-radius: 10px;
+            color: $colorForm;
+            font-weight: bolder;
+            background: $colorB;
+            cursor : pointer;
+            transition: all 300ms ease-out;
+        }
+        .signin-btn {
+            background: $colorC;
+            padding : 0.5rem 1.75rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .link {
+            margin: 0 auto;
+        }
+
+        button:hover, button:focus {
+            background: $colorForm;
+            color : $colorB;
+            border: 1px solid $colorB;
+            font-weight: bolder;
+        }
+
+        .signin-btn:hover, .signin-btn:focus {
+            color : $colorC;
+            border: 1px solid $colorC;
+        }
+
+        #file-upload-button {
+            padding : 0.25rem 1rem;
+            border: 0px;
+            border-radius: 10px;
+            color: $colorForm;
+            font-weight: bolder;
+            background: $colorB;
+            cursor : pointer;
+            transition: all 300ms ease-out;
+        }
+    }
+}

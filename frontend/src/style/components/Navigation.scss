@@ -1,0 +1,57 @@
+.navigation {
+    height: 8vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: $colorA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+
+    .logo {
+        height: 200%;
+        cursor:pointer;
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+
+    .menu {
+        display: flex;
+        li,
+        a,
+        span {
+            padding: 0 0.5rem;
+            font-size: larger;
+            transition: all 200ms ease-out;
+            cursor: pointer;
+        }
+        li:hover,
+        li.active,
+        a:hover,
+        a.active {
+            transform: scale(1.1);
+            font-weight: bold;
+        }
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-inline-start: 0px;
+    }
+
+    .account {
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        .account-icon {
+            height: 80%;
+            width: auto;
+            * {
+                stroke: $background;
+            }
+        }
+    }
+}

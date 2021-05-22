@@ -1,0 +1,110 @@
+.signin-page {
+    background-color: $background;
+    height: 90vh;
+    padding-top: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .container {
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: $colorA;
+        width: 50vw;
+        height: 60vh;
+
+        .title {
+            color: $colorForm;
+            text-align: center;
+        }
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding-bottom: 5%;
+
+            .title-second {
+                color: $colorForm;
+                font-size: 1.1rem;
+            }
+
+            .box-container {
+                text-align: left;
+                font-style: italic;
+                font-size: 1.1rem;
+                width: 100%;
+                height: 2ch;
+                padding : 10px;
+                border: 2px solid #fff;
+                border-radius: 10px;
+                vertical-align: middle;
+            }
+
+            .box-container:focus {
+                outline-color: $colorA;
+            }
+
+            .button-submit {
+                font-size: 1.75rem;
+                padding: 0.5rem 1.5rem;
+                border: 0px;
+                margin: 0 auto;
+                border-radius: 10px;
+                color: $colorForm;
+                font-weight: bolder;
+                background: $colorB;
+                transition: all 300ms ease-out;
+                cursor: pointer;
+            }
+
+            .button-signup {
+                background: $colorC;
+                font-size: 1.75rem;
+                padding: 0.5rem 1.25rem;
+                border-radius: 10px;
+                border: 0;
+                text-align: center;
+                cursor: pointer;
+                color: $colorForm;
+                font-weight: bolder;
+                transition: all 300ms ease-out;
+            }
+
+            .link {
+                margin: 0 auto;
+            }
+
+            .button-submit:hover, .button-submit:focus {
+                background: $colorForm;
+                color : $colorB;
+                border: 1px solid $colorB;
+                font-weight: bolder;
+            }
+
+            .button-signup:hover, .button-signup:focus {
+                background: $colorForm;
+                color : $colorC;
+                border: 1px solid $colorC;
+                font-weight: bolder;
+            }
+
+            .form {
+                display: flex;
+                width: 100%;
+                height: 50%;
+                justify-content: space-around;
+                flex-flow: column;
+                align-items: center;
+                padding-bottom: 5%;
+                .box {
+                    width: 80%;
+                }
+            }
+
+        }
+    }
+}
