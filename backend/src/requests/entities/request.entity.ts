@@ -16,7 +16,7 @@ export class Request {
     @Column()
     status: number;
 
-    @ManyToMany(type => Skill, skill => skill.id)
+    @ManyToMany(type => Skill, skill => skill.requests)
     skills: Skill[];
 
     @ManyToMany(type => User, user => user.helps)
