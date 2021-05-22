@@ -10,7 +10,9 @@ import { SkillsModule } from './skills/skills.module';
 import { RequestsModule } from './requests/requests.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule],
+  imports: [ConfigModule.forRoot({
+      isGlobal: true,
+  }), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule],
   controllers: [AppController],
   providers: [AppService],
 })
