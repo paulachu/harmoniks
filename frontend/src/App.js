@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import Navigation from "./components/Navigation";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import RequestsPage from "./pages/RequestsPage.js"
 import user from "./stores/User";
 import Presentation from "./pages/Presentation";
 
@@ -19,6 +20,7 @@ function App() {
                             <Route path="/" exact component={Presentation}/>
                             <Route path="/signin" exact component={SignIn} />
                             <Route path="/signup" exact component={SignUp} />
+                            <Route path="/requests" exact component={RequestsPage} />
                             <Redirect to="/" />
                         </Switch>
                     </AnimatePresence>

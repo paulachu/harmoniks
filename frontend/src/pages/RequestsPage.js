@@ -14,7 +14,12 @@ const RequestsPage = () => {
                     <div className="content-comp"> comp</div>
                     <div className="content-desc">
                         <h4 className="content-desc-1"> Description :</h4>
-                        <p className="content-desc-1">dwha dhwaui hduiwa hduiawh duiwah duiwa</p>
+                        <input
+                                placeholder="Details your problem"
+                                type="text"
+                                className="box-container"
+                                required>
+                        </input>
                     </div>
                     <div className="content-add"> add</div>
                 </div>

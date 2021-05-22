@@ -34,7 +34,7 @@ class UserStore {
         await axios(params)
             .then((res) => {
                 if (res.status !== 200)
-                    return { failed: true, message: res.data };
+                    return { failed: true, message: res.data.error };
                 return { failed: false, message: "SUCCESS" };
             })
             .catch((err) => {
@@ -53,12 +53,13 @@ class UserStore {
         await axios(params)
             .then((res) => {
                 if (res.status !== 301)
-                    return { failed: true, message: res.data };
+                    return { failed: true, message: res.message };
                 this.user = res.data;
                 return { failed: false, message: "SUCCESS" };
             })
             .catch((err) => {
-                return { failed: true, message: err.toString() };
+                console.log(err);
+                return { failed: true, message: "API error" };
             });
     }
 }

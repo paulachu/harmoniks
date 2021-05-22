@@ -10,7 +10,7 @@ const Navigation = () => {
             <div className="navigation">
                 <img src="/logos/logoBis.svg" className="logo" alt="logo" />
                 <ul className="menu">
-                    <li>Je veux aider</li>
+                    <NavLink exact to="/requests">Je veux aider</NavLink>
                     <span>|</span>
                     <li>Mes demandes </li>
                 </ul>

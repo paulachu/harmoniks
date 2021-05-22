@@ -71,9 +71,16 @@
                         height: 100%;
                     }
 
-                    .content-desc-2 {
-                        width: 90%;
-                        height: 100%;
+                    .box-container {
+                        text-align: left;
+                        font-style: italic;
+                        font-size: 1.1rem;
+                        width: 100%;
+                        height: 2ch;
+                        padding : 10px;
+                        border: 2px solid #fff;
+                        border-radius: 10px;
+                        vertical-align: middle;
                     }
                 }
 
