@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Say where to find the token here we chose to set the header in bearer token
       ignoreExpiration: false, // We decide here to not ignore expiration and return a 401 error to the client if
-      secretOrKey: jwtConstants.secret, // Secret use to encrypt the tokens
+      secretOrKey: process.env.JWT_CONST, // Secret use to encrypt the tokens
     });
   }
 
