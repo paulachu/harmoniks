@@ -1,10 +1,11 @@
 import { inject, observer } from "mobx-react";
-import React, { useState } from "react";
+import React from "react";
 import { GrUserManager } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
 import compose from "recompose/compose";
 
 const Navigation = ({user}) => {
+
     if (user.isUser)
         return (
             <div className="navigation">

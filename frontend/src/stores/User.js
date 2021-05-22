@@ -2,28 +2,30 @@
 
 import { action, autorun, computed, makeObservable, observable } from "mobx";
 import { createBrowserHistory } from "history";
+import { Cookies } from "react-cookie";
 import axios from "axios";
 
 class UserStore {
     user = {
-        isUser : false,
-        isAdmin : false,
-        name : null,
-        dept : 0,
-        history : null
-    }
+        isUser: false,
+        isAdmin: false,
+        name: null,
+        debt: 0,
+        history: null,
+        token: null
+    };
     constructor() {
         makeObservable(this, {
-            user : observable,
+            user: observable,
             login: action,
-            fillUser : action,
+            fillUser: action,
+            refreshInfo : action,
             isAdmin: computed,
             isUser: computed,
-            history : computed,
+            history: computed,
         });
-        this.login();
-        this.user.history = createBrowserHistory({forceRefresh: true});
-        // After a refresh HERE #FIXME
+        this.cookie = new Cookies();
+        this.user.history = createBrowserHistory({ forceRefresh: true });
     }
 
     get history() {
@@ -37,6 +39,17 @@ class UserStore {
     get isUser() {
         return this.user.isUser;
     }
+
+    fillUser(data) {
+        this.user.isUser = true;
+        this.user.name = data.full_name;
+        this.user.isAdmin = data.isAdmin;
+        this.user.debt = data.debt;
+        // ADD COOKIE
+        this.user.token = data.access_token;
+        this.cookie.set("user_token", this.user.token);
+    }
+
 
     // handling user login
     async login(email, password) {
@@ -61,21 +74,13 @@ class UserStore {
             });
     }
 
-    fillUser(data) {
-        this.user.isUser = true;
-        this.user.name = data.full_name;
-        this.user.isAdmin = data.isAdmin;
-        this.user.dept = data.dept;
-        // #FIXME ADD COOKIE
-    }
-
     // handling user login
     async signUp(data) {
         const params = {
             method: "post",
             url: process.env.REACT_APP_URI + "/auth/signup",
             withCredentials: true,
-            data
+            data,
         };
         await axios(params)
             .then((res) => {
@@ -88,6 +93,24 @@ class UserStore {
                 console.log(err);
                 return { failed: true, message: "API error" };
             });
+    }
+
+    refreshInfo() {
+        this.user.token = this.cookie.get("user_token");
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/auth/profile",
+            Authorization : "Bearer " + this.user.token,
+            withCredentials: true,
+        };
+        axios(params)
+        .then(res => {
+            if (res.status === 200)
+                this.fillUser(res.data)
+            else 
+                this.history.push("/signin");
+        })
+        .catch(this.history.push("/signin"));
     }
 }
 

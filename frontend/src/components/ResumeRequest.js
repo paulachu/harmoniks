@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 
+
 const ResumeRequest = () => {
     return (
         <div className="container-resume-request">
+
             <div className="wrapper-resume-request">
                 <div className="resume">
-                    <div className="resume-in">
-                        <h4 className="content-h4"> Title :</h4>
-                        <label className="box-container"> My Title</label>
+                    <h2>this is my title</h2>
+
+                    <h4> Description :</h4>
+                    <label className="text-container"> blabdwai dwua dbuiaw bduiaw dwa dwa dad wa dwa dwa dwadwa
+                    </label>
+                    
+                </div> 
+
+                <div className="skils">
+                    <h2>Skils required :</h2>
+                    <div className="wrapper-skils">
+                        <label className="content-skils">Reactjs</label>
+                        <label className="content-skils">Nodejs</label>
                     </div>
-                    <div className="resume-in">
-                        <h4 className="content-h4"> Descrition:</h4>
-                    </div>
-                    <div className="resume-in">
-                        <h4 className="content-h4"> Skils :</h4>
-                    </div>
-                </div>   
+                </div>
             </div>
         </div>
     );

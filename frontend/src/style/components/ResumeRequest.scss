@@ -9,7 +9,7 @@
         border-radius : 10px;
         display: grid;
         grid-template-columns: 40% 15% 10% 15% 15% 15%;
-        grid-template-rows: 100%;
+        grid-template-rows: 99%;
         grid-template-areas: "resume skils . status join user";
         background-color: $colorA;
         width: 100%;
@@ -17,22 +17,50 @@
 
         .resume {
             grid-area: resume;
+            width: 90%;
+            margin: auto auto;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            color: $colorForm;
 
-            .resume-in {
-                color: $colorForm;
-                align-items: center;
 
-                .content-h4 {
-                    text-align: left;
-                }
+            .text-container {
+                text-align: left;
+                resize: none;
+                padding: 5px;
+                width: 90%;
+                height:80px;
+                border: 2px solid #fff;
+                border-radius: 10px;
+            }
+        }
 
-                .box-container {
-                    text-align: center;
+        .skils {
+            grid-area: skils;
+            width: 100%;
+            margin: auto auto;
+            height: 100%;
+            color: $colorForm;
+
+            .wrapper-skils{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                width: 100%;
+                margin: auto auto;
+                height: 175px;
+                .content-skils
+                {
+                    font-style: italic;
                 }
             }
+        }
+
+        .status
+        {
+            grid-area: status;
         }
     }
 }

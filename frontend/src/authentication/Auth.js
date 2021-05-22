@@ -8,13 +8,14 @@ const Auth = ({ component, user }) => {
     return (
         <Route
             render={(props) => {
-                if (user.isUser) {
+                if (user.isUser || user.cookie.get("user")) {
+                    user.refreshInfo();
                     return <Component {...props} />;
                 } else {
                     return (
                         <Redirect
                             to={{
-                                pathname: "/",
+                                pathname: "/signin",
                             }}
                         />
                     );
