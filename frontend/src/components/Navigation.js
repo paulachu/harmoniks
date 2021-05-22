@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import compose from "recompose/compose";
 
 const Navigation = ({user}) => {
-    if (user.user.isUser)
+    if (user.isUser)
         return (
             <div className="navigation">
                 <img src="/logos/logoBis.svg" className="logo" alt="logo" />

@@ -21,8 +21,8 @@ class UserStore {
             isUser: computed,
             history : computed,
         });
-        this.user.login();
-        this.user.history = createBrowserHistory();
+        this.login();
+        this.user.history = createBrowserHistory({forceRefresh: true});
         // After a refresh HERE #FIXME
     }
 
