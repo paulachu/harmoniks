@@ -1,15 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { RequestsService } from './requests.service';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { UpdateRequestDto } from './dto/update-request.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('requests')
 export class RequestsController {
   constructor(private readonly requestsService: RequestsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createRequestDto: CreateRequestDto) {
-    return this.requestsService.create(createRequestDto);
+  create(@Body() createRequestDto: CreateRequestDto, @Req() req) {
+    console.log(req);
+    return this.requestsService.create(createRequestDto, req.user.id);
   }
 
   @Get()
@@ -30,5 +33,10 @@ export class RequestsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.requestsService.remove(+id);
+  }
+
+  @Get("my")
+  getMyRequests(@Req() req){
+    return this.requestsService.getRequestsByUser(req.user.id);
   }
 }
