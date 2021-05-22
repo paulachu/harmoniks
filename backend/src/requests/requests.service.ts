@@ -23,17 +23,17 @@ export class RequestsService {
     let newSkills: Skill[] = [];
     let currentSkills: Skill[] = await this.skillsService.findAll();
 
-    await skills.forEach((element) => {
+    for (const element of skills) {
       if (!currentSkills.find(el => el.tags === element)) {
         let dto = new CreateSkillDto();
         dto.tags = element;
-        this.skillsService.create(dto).then(async (newSkill) => {
-          await newSkills.push(newSkill);
-        });
-      } else {
+        await this.skillsService.create(dto).then(skill => {newSkills.push(skill)});
+      }
+      else
+      {
         newSkills.push(currentSkills.find(el => el.tags === element));
       }
-    });
+    }
     return newSkills;
   }
 
