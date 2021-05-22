@@ -2,6 +2,7 @@ import { BeforeInsert, Column, Entity, ManyToMany, ManyToOne, OneToMany, Primary
 import * as crypto from 'crypto';
 import { School } from '../../school/entities/school.entity';
 import { Skill } from 'src/skills/entities/skill.entity';
+import { Request } from '../../requests/entities/request.entity';
 
 @Entity()
 export class User {
@@ -44,5 +45,10 @@ export class User {
   @Column({ nullable: true })
   hopper_link: string;
 
+  @OneToMany(type => Request, request => request.user_from)
+  my_requests: Request[];
+
+  @ManyToMany(type => Request, request => request.helpers)
+  helps: Request[];
 
 }
