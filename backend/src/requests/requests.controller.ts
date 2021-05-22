@@ -14,6 +14,13 @@ export class RequestsController {
     return this.requestsService.create(createRequestDto, req.user.id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get("my")
+  getMyRequests(@Req() req){
+    console.log(req.user);
+    return this.requestsService.getRequestsByUser(req.user.id);
+  }
+
   @Get()
   findAll() {
     return this.requestsService.findAll();
@@ -32,10 +39,5 @@ export class RequestsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.requestsService.remove(+id);
-  }
-
-  @Get("my")
-  getMyRequests(@Req() req){
-    return this.requestsService.getRequestsByUser(req.user.id);
   }
 }

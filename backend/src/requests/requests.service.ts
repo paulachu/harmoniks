@@ -66,8 +66,7 @@ export class RequestsService {
 
   findAll() : Promise<Request[]> {
     return this.requestRepository.find().then(requests => {
-      console.log(requests[1]);
-      return requests.sort((first, second) => first.createdAt.getTime() - second.createdAt.getTime())
+      return requests.sort((first, second) => second.createdAt.getTime() - first.createdAt.getTime())
     }).catch(err =>
       {
         this.logger.error(err);
@@ -113,7 +112,9 @@ export class RequestsService {
   }
   getRequestsByUser(user_id: number) : Promise<Request[]> {
 
-    return this.requestRepository.find({where: {user_from: {id: user_id}}}).catch(err =>{
+    return this.requestRepository.find({where: {user_from: {id: user_id}}}).then(requests => {
+      return requests.sort((first, second) => second.createdAt.getTime() - first.createdAt.getTime())
+    }).catch(err =>{
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     })
