@@ -17,7 +17,12 @@ export class RequestsController {
   @UseGuards(JwtAuthGuard)
   @Get("my")
   getMyRequests(@Req() req){
-    console.log(req.user);
+    return this.requestsService.getRequestsByUser(req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete("my")
+  deleteMyCurrentRequest(@Req() req){
     return this.requestsService.getRequestsByUser(req.user.id);
   }
 

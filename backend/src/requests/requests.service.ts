@@ -12,29 +12,25 @@ import { Request } from './entities/request.entity';
 
 @Injectable()
 export class RequestsService {
-  private readonly logger = new Logger(RequestsService.name)
+  private readonly logger = new Logger(RequestsService.name);
+
   constructor(@InjectRepository(Request)
-  private requestRepository: Repository<Request>, private skillsService: SkillsService, private usersService: UsersService)
-  {
+              private requestRepository: Repository<Request>, private skillsService: SkillsService, private usersService: UsersService) {
   }
 
 
-  private async getSkills(skills: string[]) : Promise<Skill[]>
-  {
+  private async getSkills(skills: string[]): Promise<Skill[]> {
     let newSkills: Skill[] = [];
     let currentSkills: Skill[] = await this.skillsService.findAll();
 
     await skills.forEach((element) => {
-      if (!currentSkills.find(el => el.tags === element))
-      {
+      if (!currentSkills.find(el => el.tags === element)) {
         let dto = new CreateSkillDto();
         dto.tags = element;
         this.skillsService.create(dto).then(newSkill => {
           newSkills.push(newSkill)
         });
-      }
-      else
-      {
+      } else {
         newSkills.push(currentSkills.find(el => el.tags === element));
       }
     });
@@ -42,14 +38,13 @@ export class RequestsService {
   }
 
 
-  async create(createRequestDto: CreateRequestDto, user_id: number) : Promise<Request> {
+  async create(createRequestDto: CreateRequestDto, user_id: number): Promise<Request> {
     let newRequest = new Request();
     newRequest.title = createRequestDto.title;
     newRequest.description = createRequestDto.description;
     newRequest.status = 0;
     let user_from = await this.usersService.findOne(user_id);
-    if (!user_from)
-    {
+    if (!user_from) {
       this.logger.error('Invalid user');
       throw new HttpException("Invalid user", HttpStatus.INTERNAL_SERVER_ERROR)
     }
@@ -57,64 +52,64 @@ export class RequestsService {
     if (createRequestDto.skills) {
       newRequest.skills = await this.getSkills(createRequestDto.skills)
     }
-    return this.requestRepository.save(newRequest).catch(err =>
-      {
-        this.logger.error(err);
-        throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
-      });
+    return this.requestRepository.save(newRequest).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    });
   }
 
-  findAll() : Promise<Request[]> {
+  findAll(): Promise<Request[]> {
     return this.requestRepository.find().then(requests => {
       return requests.sort((first, second) => second.createdAt.getTime() - first.createdAt.getTime())
-    }).catch(err =>
-      {
-        this.logger.error(err);
-        throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
-      });
+    }).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    });
   }
 
-  findOne(id: number) : Promise<Request>{
-    return this.requestRepository.findOne(id).catch(err =>
-      {
-        this.logger.error(err);
-        throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
-      });
+  findOne(id: number): Promise<Request> {
+    return this.requestRepository.findOne(id).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    });
   }
 
-  async update(id: number, updateRequestDto: UpdateRequestDto) : Promise<UpdateResult> {
+  async update(id: number, updateRequestDto: UpdateRequestDto): Promise<UpdateResult> {
     let newRequest = new Request();
     newRequest.title = updateRequestDto.title;
     newRequest.description = updateRequestDto.description;
     newRequest.status = 0;
 
 
-
-    if (updateRequestDto.skills)
-    {
+    if (updateRequestDto.skills) {
       newRequest.skills = await this.getSkills(updateRequestDto.skills);
     }
 
 
-    return this.requestRepository.update(id, newRequest).catch(err =>
-      {
-        this.logger.error(err);
-        throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
-      });
+    return this.requestRepository.update(id, newRequest).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
+    });
   }
 
-  remove(id: number) : Promise<DeleteResult> {
-    return this.requestRepository.delete(id).catch(err =>
-      {
-        this.logger.error(err);
-        throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
+  remove(id: number): Promise<DeleteResult> {
+    return this.requestRepository.delete(id).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
-  getRequestsByUser(user_id: number) : Promise<Request[]> {
 
-    return this.requestRepository.find({where: {user_from: {id: user_id}}}).then(requests => {
+  removeRequestByUser(userId: number): Promise<DeleteResult> {
+    return this.requestRepository.delete({ user_from: { id: userId } }).catch(err => {
+      this.logger.error(err);
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
+
+  getRequestsByUser(userId: number): Promise<Request[]> {
+    return this.requestRepository.find({ where: { user_from: { id: userId } } }).then(requests => {
       return requests.sort((first, second) => second.createdAt.getTime() - first.createdAt.getTime())
-    }).catch(err =>{
+    }).catch(err => {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     })
