@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import session from 'express-session';
+import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  /*app.use(
+  app.use(
     session({
       secret: process.env.SESSION_SECRET,
       resave: false,
@@ -15,8 +15,8 @@ async function bootstrap() {
         httpOnly: true, // so that cookie can't be accessed via client-side script
       }
     }),
-  );*/
+  );
 
   await app.listen(3000);
 }
-bootstrap();
+bootstrap()

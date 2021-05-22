@@ -66,7 +66,6 @@ export class SchoolService {
 
   findByDomain(domain: string): Promise<School>
   {
-    console.log(domain);
     return this.schoolRepository.findOne({domain}).catch(err => {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);

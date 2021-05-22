@@ -24,21 +24,24 @@ export class RequestsService {
     let newSkills: Skill[] = [];
     let currentSkills: Skill[] = await this.skillsService.findAll();
 
-    skills.forEach(async (element) => {
+    await skills.forEach((element) => {
       if (!currentSkills.find(el => el.tags === element))
       {
         let dto = new CreateSkillDto();
         dto.tags = element;
-        newSkills.push(await this.skillsService.create(dto));
+        this.skillsService.create(dto).then(newSkill => {
+          newSkills.push(newSkill)
+        });
       }
       else
       {
         newSkills.push(currentSkills.find(el => el.tags === element));
       }
     });
-
     return newSkills;
   }
+
+
   async create(createRequestDto: CreateRequestDto, user_id: number) : Promise<Request> {
     let newRequest = new Request();
     newRequest.title = createRequestDto.title;
@@ -54,7 +57,6 @@ export class RequestsService {
     if (createRequestDto.skills) {
       newRequest.skills = await this.getSkills(createRequestDto.skills)
     }
-    console.log(newRequest);
     return this.requestRepository.save(newRequest).catch(err =>
       {
         this.logger.error(err);

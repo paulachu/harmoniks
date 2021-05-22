@@ -1,4 +1,14 @@
-import { BeforeInsert, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import * as crypto from 'crypto';
 import { School } from '../../school/entities/school.entity';
 import { Skill } from 'src/skills/entities/skill.entity';
@@ -27,6 +37,7 @@ export class User {
   isAdmin: boolean;
 
   @ManyToOne(type => School, (school) => school.users)
+  @JoinColumn()
   school: School;
 
   @Column({ nullable: true })
@@ -46,11 +57,10 @@ export class User {
   @Column({ nullable: true })
   hopper_link: string;
 
-  @OneToMany(type => Request, (request) => request.user_from)
+  @ManyToMany(type => Request, request => request.user_from)
   my_requests: Request[];
 
-  @ManyToMany(type => Request, (request) => request.helpers)
-  @JoinTable()
+  @ManyToMany(type => User, (user) => user.helps)
   helps: Request[];
 
 }

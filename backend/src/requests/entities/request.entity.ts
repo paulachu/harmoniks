@@ -25,6 +25,7 @@ export class Request {
     helpers: User[];
 
     @ManyToOne(type => User, (user) => user.my_requests)
+    @JoinTable()
     user_from: User;
 
     @Column({nullable: false, default: () => "CURRENT_TIMESTAMP", type: "timestamp"})
