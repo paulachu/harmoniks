@@ -21,7 +21,6 @@ export class User {
   hashPassword() {
     this.password = crypto.createHmac('sha256', this.password).digest('hex');
   }
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,7 +40,7 @@ export class User {
   @JoinColumn()
   school: School;
 
-  @Column({ nullable: true })
+  @Column({ default: 0, nullable: true })
   debt: number;
 
   @ManyToMany((type) => Skill, (skill) => skill.users, { eager: true, nullable: false})
@@ -62,7 +61,7 @@ export class User {
 
   @ManyToMany((type) => User, (user) => user.helps)
   helps: Request[];
-  
+
   @ManyToMany((type) => Project, (project) => project.users)
   projects: Project[];
 }

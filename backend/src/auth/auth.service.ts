@@ -31,6 +31,7 @@ export class AuthService {
     let tmpSignedPayload = this.jwtService.sign(payload);
     return {
       access_token: tmpSignedPayload,
+      userInfo: user
     }
   }
 

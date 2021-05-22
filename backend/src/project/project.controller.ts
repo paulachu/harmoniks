@@ -44,4 +44,11 @@ export class ProjectController {
   {
     return this.projectService.addUser(+id, req.user);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch("resolved/:id")
+  markAsSolved(@Param('id') id: string, @Body('user_id') user_id: number)
+  {
+    return this.projectService.markAsSolved(+id, user_id);
+  }
 }

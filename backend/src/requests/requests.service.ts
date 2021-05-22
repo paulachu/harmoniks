@@ -15,7 +15,8 @@ export class RequestsService {
   private readonly logger = new Logger(RequestsService.name);
 
   constructor(@InjectRepository(Request)
-              private requestRepository: Repository<Request>, private skillsService: SkillsService, private usersService: UsersService) {
+              private requestRepository: Repository<Request>, private skillsService: SkillsService,
+              private usersService: UsersService) {
   }
 
 
@@ -94,5 +95,37 @@ export class RequestsService {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     })
+  }
+
+
+  async addUserToRequest(userId: number, id: number): Promise<UpdateResult>
+  {
+    let request = await this.requestRepository.findOne(id);
+    request.helpers.push(await this.usersService.findOne(userId));
+    return this.requestRepository.update(id, request).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
+
+  async markAsSolved(id: number, user_id: number, user_from_id: number)
+  {
+    let request = await this.requestRepository.findOne(id);
+    if (request.user_from.id !== user_from_id)
+    {
+      this.logger.error('Bien essayer garcon');
+      throw new HttpException("error: Bien essayer garcon", HttpStatus.FORBIDDEN);
+    }
+    let owner = await this.usersService.findOne(user_from_id);
+    owner.debt -= 1;
+    await this.usersService.update(user_from_id, owner);
+    let user = await this.usersService.findOne(user_id);
+    user.debt += 1;
+    await this.usersService.update(user_id, user);
+    request.status = 1;
+    return this.requestRepository.update(id, request).catch(err => {
+      this.logger.error(err);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
   }
 }

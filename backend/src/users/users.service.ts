@@ -72,14 +72,19 @@ export class UsersService {
   }
 
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+  async updateWithDto(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     const newUser = await this.createUserFromDto(updateUserDto);
     return this.usersRepository.update(id, newUser).catch(err => {
       this.logger.error(err);
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     });
   }
-
+  async update(id, user: User): Promise<UpdateResult> {
+    return this.usersRepository.update(id, user).catch(err => {
+      this.logger.error(err);
+      throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
   remove(id: number): Promise<DeleteResult> {
     return this.usersRepository.delete(id).catch(err => {
       this.logger.error(err);

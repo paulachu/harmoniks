@@ -49,4 +49,15 @@ export class RequestsController {
   remove(@Param('id') id: string) {
     return this.requestsService.remove(+id);
   }
+  @Patch(':id')
+  addUser(@Param('id') id: string,  @Body('user_id') user_id: number)
+  {
+    return this.requestsService.addUserToRequest(user_id, +id);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  markAsSolved(@Param('id') id: string,  @Body('user_id') user_id: number, @Req() req)
+  {
+    return this.requestsService.markAsSolved(+id, user_id, req.user.id);
+  }
 }

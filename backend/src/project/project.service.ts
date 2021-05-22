@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SkillsService } from 'src/skills/skills.service';
 import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
@@ -13,7 +14,7 @@ export class ProjectService {
   private readonly logger = new Logger(ProjectService.name)
   constructor(
     @InjectRepository(Project)
-    private readonly projectRepository: Repository<Project>, private skillsService: SkillsService
+    private readonly projectRepository: Repository<Project>, private skillsService: SkillsService, private userService: UsersService
   ){}
 
 
@@ -58,6 +59,20 @@ export class ProjectService {
       });
   }
 
+  async markAsSolved(id: number, user_id: number)
+  {
+    let project = await this.projectRepository.findOne(id);
+    for (let user of project.users)
+    {
+      user.debt += 1;
+      this.userService.update(user.id, user);
+    }
+    project.status = 1;
+    this.projectRepository.update(id, project).catch(err =>{
+      this.logger.error(err.message);
+      throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    });
+  }
   remove(id: number) : Promise<DeleteResult> {
     return this.projectRepository.delete(id).catch(err =>
       {
