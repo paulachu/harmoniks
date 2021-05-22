@@ -4,7 +4,7 @@ export class CreateUserDto {
   password: string;
   school_id: number;
   debt: number;
-  skills: string;
+  skills: string[];
   discord_id: string;
   linkedin_link: string;
   hopper_link: string;

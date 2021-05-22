@@ -51,6 +51,25 @@ export class SkillsService {
         throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
       })
   }
+
+  public async getSkills(skills: string[]): Promise<Skill[]> {
+    let newSkills: Skill[] = [];
+    let currentSkills: Skill[] = await this.findAll();
+
+    for (const element of skills) {
+      if (!currentSkills.find(el => el.tags === element)) {
+        let dto = new CreateSkillDto();
+        dto.tags = element;
+        await this.create(dto).then(skill => {newSkills.push(skill)});
+      }
+      else
+      {
+        newSkills.push(currentSkills.find(el => el.tags === element));
+      }
+    }
+    return newSkills;
+  }
+
   /*
   addUser(id: number) : Promise<Skill>{
     this.skillRepository.findOne(id).then(skill => skill.users.push())
