@@ -27,8 +27,8 @@ export class RequestsService {
       if (!currentSkills.find(el => el.tags === element)) {
         let dto = new CreateSkillDto();
         dto.tags = element;
-        this.skillsService.create(dto).then(newSkill => {
-          newSkills.push(newSkill)
+        this.skillsService.create(dto).then(async (newSkill) => {
+          await newSkills.push(newSkill);
         });
       } else {
         newSkills.push(currentSkills.find(el => el.tags === element));
@@ -43,12 +43,12 @@ export class RequestsService {
     newRequest.title = createRequestDto.title;
     newRequest.description = createRequestDto.description;
     newRequest.status = 0;
-    let user_from = await this.usersService.findOne(user_id);
-    if (!user_from) {
+    let userFrom = await this.usersService.findOne(user_id);
+    if (!userFrom) {
       this.logger.error('Invalid user');
       throw new HttpException("Invalid user", HttpStatus.INTERNAL_SERVER_ERROR)
     }
-    newRequest.user_from = user_from;
+    newRequest.user_from = userFrom;
     if (createRequestDto.skills) {
       newRequest.skills = await this.getSkills(createRequestDto.skills)
     }
