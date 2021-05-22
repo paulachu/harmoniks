@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { User } from './entities/user.entity';
+import { SchoolService } from 'src/school/school.service';
 
 @Injectable()
 export class UsersService {
@@ -12,11 +13,27 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>
+    private usersRepository: Repository<User>, private schoolService: SchoolService
   ) {}
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    return this.usersRepository.save(createUserDto).catch(err =>
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    let afterAt = createUserDto.email.indexOf('@');
+    let domain = createUserDto.email.substr(afterAt + 1);
+    let school = await this.schoolService.findByDomain(domain);
+    if (!school)
+    {
+      throw new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
+    }
+    let newUser = new User();
+    newUser.discord_id = createUserDto.discord_id;
+    newUser.email = createUserDto.email;
+    newUser.full_name = createUserDto.full_name;
+    newUser.hopper_link = createUserDto.hopper_link;
+    newUser.linkedin_link = createUserDto.linkedin_link;
+    newUser.password = createUserDto.password;
+    newUser.skills = createUserDto.skills;
+    newUser.school = school;
+    return this.usersRepository.save(newUser).catch(err =>
     {
       this.logger.error(err);
       throw new HttpException('Invalid data', HttpStatus.BAD_REQUEST);

@@ -20,14 +20,14 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({select: false})
   password: string;
 
   @Column({default: false})
   isAdmin: boolean;
 
   @ManyToOne(type => School, school => school.users)
-  school: number;
+  school: School;
 
   @Column({ nullable: true })
   debt: number;
