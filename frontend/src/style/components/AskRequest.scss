@@ -1,0 +1,115 @@
+.container-request {
+background-color: $colorA;
+margin: 3vh auto;
+width: 80vw;
+height: 250px;
+border-radius : 10px;
+
+.title {
+    color: $colorForm;
+    text-align: left;
+}
+
+.wrapper-1 {
+    border-radius : 10px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 33% 33% 33%;
+    grid-template-areas: "name title title comp"
+                        "desc desc desc comp"
+                        "desc desc desc add";
+    background-color: $colorA;
+    width: 100%;
+    height: 100%;
+        div {
+            width: 100%;
+            height: 100%;
+            margin: 5px;
+        }
+
+        .content-name {
+            text-align: center;
+            color: $colorForm;
+            grid-area: name;
+        }
+
+        .content-title {
+            margin-top: 25px;
+            grid-area: title;
+            text-align: center;
+            color: $colorForm;
+        }
+
+        .content-comp {
+            grid-area: comp;
+            text-align: center;
+            color: $colorForm;
+        }
+        .box-container {
+            text-align: left;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: center;
+            width: 100%;
+            height: 2ch;
+            padding : 10px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            vertical-align: middle;
+        }
+
+        .text-container {
+            text-align: left;
+            resize: none;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin: auto;
+            width: 100%;
+            padding : 30px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+        }
+
+        .content-desc {
+            grid-area: desc;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            color: $colorForm;
+            
+            .content-desc-1 {
+                margin: auto;
+                width: 20%;
+                text-align: center;
+            }
+
+        }
+
+        .content-add {
+            grid-area: add;
+            color: $colorForm;
+            text-align: center;
+
+            .button-submit {
+                font-size: 1.75rem;
+                padding: 0.5rem 1.5rem;
+                border: 0px;
+                margin: 0 auto;
+                border-radius: 10px;
+                color: $colorForm;
+                font-weight: bolder;
+                background: $colorB;
+                transition: all 300ms ease-out;
+                cursor: pointer;
+            }
+
+            .button-submit:hover, .button-submit:focus {
+                background: $colorForm;
+                color : $colorB;
+                font-weight: bolder;
+            }
+        }
+    
+}
+}

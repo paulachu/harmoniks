@@ -1,0 +1,39 @@
+.container-resume-request {
+    background-color: $colorA;
+    margin: 3vh auto;
+    width: 80vw;
+    height: 250px;
+    border-radius : 10px;
+
+    .wrapper-resume-request {
+        border-radius : 10px;
+        display: grid;
+        grid-template-columns: 40% 15% 10% 15% 15% 15%;
+        grid-template-rows: 100%;
+        grid-template-areas: "resume skils . status join user";
+        background-color: $colorA;
+        width: 100%;
+        height: 100%;
+
+        .resume {
+            grid-area: resume;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .resume-in {
+                color: $colorForm;
+                align-items: center;
+
+                .content-h4 {
+                    text-align: center;
+                }
+
+                .box-container {
+                    text-align: center;
+
+                }
+            }
+        }
+    }
+}
