@@ -19,9 +19,9 @@ export class Request {
     @ManyToMany(type => Skill, skill => skill.id)
     skills: Skill[];
 
-    @ManyToMany(type => User, user => user.id)
+    @ManyToMany(type => User, user => user.helps)
     helpers: User[];
 
-    @ManyToOne(type => User, user => user.id)
+    @ManyToOne(type => User, user => user.my_requests)
     user_from: User;
 }
