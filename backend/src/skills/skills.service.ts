@@ -51,4 +51,8 @@ export class SkillsService {
         throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
       })
   }
+  /*
+  addUser(id: number) : Promise<Skill>{
+    this.skillRepository.findOne(id).then(skill => skill.users.push())
+  }*/
 }

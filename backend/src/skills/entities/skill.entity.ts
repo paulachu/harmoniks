@@ -9,9 +9,6 @@ export class Skill {
     @Column()
     tags: string;
 
-    @Column()
-    description: string;
-
     @ManyToMany(type => User, user => user.skills)
     users: User[];
 }
