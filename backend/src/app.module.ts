@@ -9,11 +9,12 @@ import { SchoolModule } from './school/school.module';
 import { SkillsModule } from './skills/skills.module';
 import { RequestsModule } from './requests/requests.module';
 import { BotModule } from './bot/bot.module';
+import { ProjectModule } from './project/project.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true,
-  }), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule, BotModule],
+  }), UsersModule, SchoolModule, TypeOrmModule.forRoot(), AuthModule, SkillsModule, RequestsModule, BotModule, ProjectModule],
   controllers: [AppController],
   providers: [AppService],
 })

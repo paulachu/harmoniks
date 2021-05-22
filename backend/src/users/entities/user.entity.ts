@@ -13,6 +13,7 @@ import { School } from '../../school/entities/school.entity';
 import { Skill } from 'src/skills/entities/skill.entity';
 import { Request } from '../../requests/entities/request.entity';
 import { CreateUserDto } from '../dto/create-user.dto';
+import { Project } from 'src/project/entities/project.entity';
 
 @Entity()
 export class User {
@@ -61,5 +62,7 @@ export class User {
 
   @ManyToMany((type) => User, (user) => user.helps)
   helps: Request[];
-
+  
+  @ManyToMany((type) => Project, (project) => project.users)
+  projects: Project[];
 }
