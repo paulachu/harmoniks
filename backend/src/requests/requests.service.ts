@@ -56,7 +56,9 @@ export class RequestsService {
   }
 
   findAll() : Promise<Request[]> {
-    return this.requestRepository.find().catch(err =>
+    return this.requestRepository.find().then(requests => {
+      return requests.sort((first, second) => first.createdAt.getTime() - second.createdAt.getTime())
+    }).catch(err =>
       {
         this.logger.error(err);
         throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)

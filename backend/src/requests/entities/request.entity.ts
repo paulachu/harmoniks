@@ -24,4 +24,7 @@ export class Request {
 
     @ManyToOne(type => User, user => user.my_requests)
     user_from: User;
+
+    @Column({nullable: false, default: () => "CURRENT_TIMESTAMP", type: "timestamp"})
+    createdAt: Date;
 }
