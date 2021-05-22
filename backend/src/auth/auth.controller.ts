@@ -14,8 +14,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req) {
-    return req.user;
+    console.log(req.user);
+    return this.authService.getAuthInfoUser(req.user);
   }
+
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   async signIn(@Req() req) {
