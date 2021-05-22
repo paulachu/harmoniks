@@ -15,7 +15,7 @@ async function bootstrap() {
         httpOnly: true, // so that cookie can't be accessed via client-side script
       }
     }),
-  );
+  ).enableCors();
 
   await app.listen(3000);
 }
