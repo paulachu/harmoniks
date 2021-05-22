@@ -6,19 +6,38 @@ import { inject, observer } from "mobx-react";
 
 import InputTags from "../components/InputTags";
 
-
-const SignUp = () => {
+const SignUp = ({ user }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [cpass, setCPass] = useState("");
     const [tags, setTags] = useState([]);
+    const [linkedin, setLinkedin] = useState("");
+    const [hooper, setHooper] = useState("");
+    const [discord, setDiscord] = useState("");
     const [photo, setPhoto] = useState(null);
 
     const handleSignUp = (e) => {
         e.preventDefault();
+        const tag_res = [];
+        tags.forEach((tag) => tag_res.push({ tags: tag.tags }));
+        const body = {
+            email,
+            skills: tag_res,
+            picture: photo,
+            linkedin_link: linkedin,
+            hooper_link: hooper,
+            discord_id: discord,
+            full_name: name,
+        };
+        const res = user.signup(body);
+        if (!res.failed) {
+            user.history.push("/requests");
+        } else {
+            document.querySelector(".errormsg").innerHTML = res.message;
+            setTags([]);
+        }
     };
-
 
     return (
         <motion.div
@@ -30,7 +49,7 @@ const SignUp = () => {
                 <h1>Join Us</h1>
                 <form onSubmit={(e) => handleSignUp(e)}>
                     <div className="name">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name">Name*</label>
                         <br />
                         <input
                             type="text"
@@ -42,7 +61,7 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="email">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Email* </label>
                         <br />
                         <input
                             type="text"
@@ -53,8 +72,42 @@ const SignUp = () => {
                             required
                         />
                     </div>
+                    <div className="discord">
+                        <label htmlFor="discord">Discord*</label>
+                        <br />
+                        <input
+                            type="text"
+                            id="discord"
+                            value={discord}
+                            onChange={(e) => setDiscord(e.target.value)}
+                            placeholder="JohnDoe#1042"
+                            required
+                        />
+                    </div>
+                    <div className="linkedIn">
+                        <label htmlFor="linkedIn">LinkedIn</label>
+                        <br />
+                        <input
+                            type="text"
+                            id="linkedIn"
+                            value={linkedin}
+                            onChange={(e) => setLinkedin(e.target.value)}
+                            placeholder="http://linkedin.com/in/john-doe"
+                        />
+                    </div>
+                    <div className="hooper">
+                        <label htmlFor="hooper">Hooper</label>
+                        <br />
+                        <input
+                            type="text"
+                            id="hooper"
+                            value={hooper}
+                            onChange={(e) => setHooper(e.target.value)}
+                            placeholder="http://hooper.com/in/john-doe"
+                        />
+                    </div>
                     <div className="password">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Password*</label>
                         <br />
                         <input
                             type="password"
@@ -67,7 +120,7 @@ const SignUp = () => {
                     </div>
                     <div className="confirm-password">
                         <label htmlFor="confirm-password">
-                            Confirm Password
+                            Confirm Password*
                         </label>
                         <br />
                         <input
@@ -79,11 +132,14 @@ const SignUp = () => {
                         />
                     </div>
                     <div className="skills">
-                        <label htmlFor="skills" id="skills">Skills</label>
+                        <label htmlFor="skills" id="skills">
+                            Skills
+                        </label>
                         <InputTags
                             tags={tags}
                             setTags={setTags}
-                            limitedToSuggestions={false}/>
+                            limitedToSuggestions={false}
+                        />
                     </div>
                     <div className="photo">
                         <label htmlFor="photo">Add a Photo</label>
@@ -94,15 +150,21 @@ const SignUp = () => {
                             id="photo"
                         />
                     </div>
-                    <div className="submit">
-                        <button type="submit" id="submit">
-                            Sign Up
-                        </button>
+                    <div>
+                        <div className="errormsg">
+                        </div>
+                        <div className="btns">
+                            <div className="submit">
+                                <button type="submit" id="submit">
+                                    Sign Up
+                                </button>
+                            </div>
+                            <NavLink className="link" exact to="/signin">
+                                <button className="signin-btn">Sign In</button>
+                            </NavLink>
+                        </div>
                     </div>
                 </form>
-                <NavLink className="link" exact to="/signin">
-                    <button className="signin-btn">Sign In</button>
-                </NavLink>
             </div>
         </motion.div>
     );

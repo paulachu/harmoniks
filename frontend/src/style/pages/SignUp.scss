@@ -44,6 +44,7 @@
                     button {
                         border-radius: 50%;
                         background: $background!important;
+                        height: 50%;
                     }
             }
 
@@ -52,10 +53,7 @@
                 outline-color: $colorA;
             }
             
-            div.submit {
-                flex: 1 1 100%;
-                text-align: center;
-            }
+
         }
         #submit,.signin-btn {
             font-size: 1.75rem;
@@ -74,6 +72,17 @@
             border-radius: 10px;
             text-align: center;
             cursor: pointer;
+        }
+
+        .btns {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            transform : translateY(100%);
+            button {
+                flex : 1 1 50%;
+                width: fit-content;
+            }
         }
 
         .link {

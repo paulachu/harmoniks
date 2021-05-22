@@ -48,6 +48,7 @@
         align-items: flex-end;
         .account-icon {
             height: 80%;
+            cursor: pointer;
             width: auto;
             * {
                 stroke: $background;

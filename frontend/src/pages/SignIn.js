@@ -21,6 +21,9 @@ const SignIn = ({user}) => {
         const res = user.login(email, password);
         if (res.failed){
             document.querySelector(".errormsg").innerHTML= res.message;
+            user.history.push("/requests");
+        } else {
+            user.history.push("/requests");
         }
     }
 

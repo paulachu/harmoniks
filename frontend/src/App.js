@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import RequestsPage from "./pages/RequestsPage.js"
 import user from "./stores/User";
 import Presentation from "./pages/Presentation";
+import Profil from "./pages/Profil";
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                             <Route path="/signin" exact component={SignIn} />
                             <Route path="/signup" exact component={SignUp} />
                             <Route path="/requests" exact component={RequestsPage} />
+                            <Route path="/profil" exact component={Profil} />
                             <Redirect to="/" />
                         </Switch>
                     </AnimatePresence>
