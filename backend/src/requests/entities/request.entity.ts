@@ -16,15 +16,15 @@ export class Request {
     @Column()
     status: number;
 
-    @ManyToMany(type => Skill, (skill) => skill.requests)
-    @JoinTable()
+    @ManyToMany(type => Skill, (skill) => skill.requests, { eager: true })
+    @JoinTable({name: "request_skills"})
     skills: Skill[];
 
-    @ManyToMany(type => User, (user) => user.helps)
-    @JoinTable()
+    @ManyToMany(type => User, (user) => user.helps, { eager: true })
+    @JoinTable({name: "request_helpers"})
     helpers: User[];
 
-    @ManyToOne(type => User, (user) => user.my_requests)
+    @ManyToOne(type => User, (user) => user.my_requests, { eager: true })
     @JoinTable()
     user_from: User;
 

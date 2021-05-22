@@ -66,6 +66,7 @@ export class RequestsService {
 
   findAll() : Promise<Request[]> {
     return this.requestRepository.find().then(requests => {
+      console.log(requests[1]);
       return requests.sort((first, second) => first.createdAt.getTime() - second.createdAt.getTime())
     }).catch(err =>
       {

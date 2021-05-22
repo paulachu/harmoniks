@@ -43,8 +43,8 @@ export class User {
   @Column({ nullable: true })
   debt: number;
 
-  @ManyToMany(type => Skill, (skill) => skill.users)
-  @JoinTable()
+  @ManyToMany(type => Skill, (skill) => skill.users, { eager: true })
+  @JoinTable({name: "user_skills"})
   @Column({ nullable: true })
   skills: string;
 
