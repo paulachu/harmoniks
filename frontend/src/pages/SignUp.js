@@ -1,16 +1,11 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
-import { WithContext as ReactTags } from "react-tag-input";
 
-const KeyCodes = {
-    comma: 188,
-    enter: 13,
-};
+import InputTags from "../components/InputTags";
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 const SignUp = () => {
     const [name, setName] = useState("");
@@ -22,37 +17,8 @@ const SignUp = () => {
 
     const handleSignUp = (e) => {
         e.preventDefault();
-        console.log(photo);
     };
 
-
-
-    const createSuggestion = (id, text) => {
-        return { id, text };
-    };
-
-    const suggestions = useState([
-        createSuggestion("1", "NodeJS"),
-        createSuggestion("2", "React"),
-        createSuggestion("3", "Python"),
-        createSuggestion("4", "Cooking"),
-        createSuggestion("5", "UXDesign"),
-        createSuggestion("6", "Commerce"),
-    ])[0];
-
-    const handleDelete = (i) => {
-        setTags(tags.filter((tag, index) => index !== i));
-    };
-    const handleAddition = (tag) => {
-        setTags([...tags, tag]);
-    };
-
-    const handleDrag = (tag, currPos, newPos) => {
-        const newTags = tags.slice();
-        newTags.splice(currPos, 1);
-        newTags.splice(newPos, 0, tag);
-        setTags(newTags);
-    };
 
     return (
         <motion.div
@@ -114,15 +80,10 @@ const SignUp = () => {
                     </div>
                     <div className="skills">
                         <label htmlFor="skills" id="skills">Skills</label>
-                        <ReactTags
+                        <InputTags
                             tags={tags}
-                            suggestions={suggestions}
-                            handleDelete={handleDelete}
-                            handleAddition={handleAddition}
-                            handleDrag={handleDrag}
-                            //delimiters={delimiters}
-                            inputFieldPosition="bottom"
-                        />
+                            setTags={setTags}
+                            limitedToSuggestions={false}/>
                     </div>
                     <div className="photo">
                         <label htmlFor="photo">Add a Photo</label>

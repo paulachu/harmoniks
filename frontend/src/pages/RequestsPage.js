@@ -9,19 +9,30 @@ const RequestsPage = () => {
                         <h2>Need help ?</h2>
                     </div>
                     <div className="content-title">
-                        <h3>Mon titre</h3>
-                    </div>
-                    <div className="content-comp"> comp</div>
-                    <div className="content-desc">
-                        <h4 className="content-desc-1"> Description :</h4>
                         <input
-                                placeholder="Details your problem"
+                                placeholder="Enter your title"
                                 type="text"
                                 className="box-container"
                                 required>
                         </input>
                     </div>
-                    <div className="content-add"> add</div>
+                    <div className="content-comp">
+                        <input
+                                placeholder="Required Competences"
+                                type="text"
+                                className="box-container"
+                                required>
+                        </input>
+                    </div>
+                    <div className="content-desc">
+                        <h4 className="content-desc-1"> Description :</h4>
+                        <textarea placeholder="Detailes your request"
+                            rows="3" cols="3" maxlength="500" className="text-container">
+                        </textarea>
+                    </div>
+                    <div className="content-add">
+                        <button className="button-submit">Send</button>
+                    </div>
                 </div>
             </div>
             <div className="container-request"></div>
