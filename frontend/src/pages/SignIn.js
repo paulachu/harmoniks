@@ -10,7 +10,6 @@ const SignIn = ({user}) => {
 
 
     const handleLogin = () => {
-        console.log(password);
         if(!password  || !email)
         {
             document.querySelector(".errormsg").innerHTML= "Please fill the missing fields";
@@ -18,13 +17,14 @@ const SignIn = ({user}) => {
         }
         else
             document.querySelector(".errormsg").innerHTML= "";
-        const res = user.login(email, password);
-        if (res.failed){
-            document.querySelector(".errormsg").innerHTML= res.message;
-            user.history.push("/requests");
-        } else {
-            user.history.push("/requests");
-        }
+        user.login(email, password).then(res => {
+            if (res.failed){
+                document.querySelector(".errormsg").innerHTML= res.message;
+            } else {
+                console.log(res);
+                user.history.push("/requests");
+            }
+        }).catch(err => console.log(err));
     }
 
     return (
