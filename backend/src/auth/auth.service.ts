@@ -44,9 +44,8 @@ export class AuthService {
     });
   }
 
-    async getAuthInfoUser(user) {
-      const userInfos = {userInfo: await this.usersService.findOne(user.id)};
-      this.logger.log(userInfos);
-      return userInfos;
+    async getAuthInfoUser(currentUser) {
+      const currentUserInfo = await this.usersService.findOne(currentUser.id);
+      return {userInfo: currentUserInfo};
     }
 }

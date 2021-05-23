@@ -21,7 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @param payload Payload sent by the client
    */
   async validate(payload: any) {
-    this.logger.debug(payload.sub);
     return { id: payload.sub, email: payload.email };
   }
 }
