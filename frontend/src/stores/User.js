@@ -21,6 +21,7 @@ class UserStore {
             fillUser: action,
             refreshInfo: action,
             logout : action,
+            getProfile : action,
             isAdmin: computed,
             isUser: computed,
             history: computed,
@@ -101,6 +102,27 @@ class UserStore {
         this.cookie.remove("user_token");
         this.user.isUser = false;
         this.user.history.push("/signin");
+    }
+
+    async getProfile()
+    {
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/auth/profile",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+        return axios(params).then(res => {
+            if (res.status === 200)
+            {
+                return res.data.userInfo;
+            }
+            this.user.history.push('/signin');
+        }).catch(err => {
+            console.log(err);
+            this.user.history.push("/signin");
+        });
     }
 
     async refreshInfo() {

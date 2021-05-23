@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { Redirect, Route } from "react-router";
+import { Route } from "react-router";
 import { compose } from "recompose";
 
 const Auth = ({ component, user }) => {
@@ -9,7 +9,7 @@ const Auth = ({ component, user }) => {
     return (
         <Route
             render={(props) => {
-                const res = user.refreshInfo();
+                user.refreshInfo();
                 return <Component {...props} />;
             }}
         />
