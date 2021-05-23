@@ -66,16 +66,19 @@
         .status
         {
             grid-area: status;
-            margin-top: 184px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
 
             .content-status {
                 color: $colorForm;
-                align-self: center;
-                width: 50%;
-                margin-left: 50%;
                 padding: 10px;
                 padding-left: 20px;
                 padding-right: 20px;
+                margin-left: 50%;
+                margin-bottom: 10%;
+                transition: all 200ms ease-out;
                 background-color: $colorC;
             }
 
@@ -84,12 +87,13 @@
 
         .join-discord{
             grid-area: join;
+            display: flex;
+            align-items: flex-end;
 
 
             .logo-image {
-                margin: auto;
+                margin-bottom: 10%;
                 width: 80%;
-                margin-top: 163px;
                 transition: all 200ms ease-out;
             }
 
@@ -102,19 +106,20 @@
 
         .user{
             grid-area: user;
-            margin-top : 40px;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
 
             .user-image {
                 border-radius: 50%;
-                width : 80%;
+                width : 70%;
                 margin: auto;
-                margin-top: 10px;
                 padding : 5px;
                 transition: all 200ms ease-out;
             }
 
             .user-image:hover {
-                width: 86%;
+                width: 76%;
                 cursor: pointer;
                 opacity: 0,7;
             }
@@ -122,8 +127,7 @@
             .textbot {
                 color: $colorForm;
                 align-self: center;
-                width: 50%;
-                margin-left: 25px;
+                margin: auto;
             }
         }
     }
