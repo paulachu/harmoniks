@@ -37,7 +37,7 @@ const ResumeRequest = ({request, isMine = false, handleDelete}) => {
                 </div>
 
                 <div className="join-discord">
-                    <a src={request.discordLink}>
+                    <a href={request.discordLink} target="_blank" rel="noreferrer">
                         <img src="/logos/discordLogo.png" className="logo-image"></img>
                     </a>
                 </div>
