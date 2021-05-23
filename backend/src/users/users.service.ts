@@ -21,12 +21,14 @@ export class UsersService {
 
   private async createUserFromDto(userDto: CreateUserDto | UpdateUserDto): Promise<User> {
     let afterAt = userDto.email.indexOf('@');
-    let domain = userDto.email.substr(afterAt + 1);
+    let domain = userDto.email.substr(afterAt + 1).toLowerCase();
     let school = await this.schoolService.findByDomain(domain);
     if (!school)
     {
       throw new HttpException('Invalid data', HttpStatus.BAD_REQUEST);
     }
+    this.logger.debug(userDto);
+    this.logger.debug(school);
     let newUser = new User();
     newUser.discord_id = userDto.discord_id;
     newUser.email = userDto.email;
