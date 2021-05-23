@@ -60,8 +60,15 @@ export class UsersService {
     return this.usersRepository.findOne(id).catch(err => {
       this.logger.error(err);
       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+    }).then(async (res) => {
+      let afterAt = res.email.indexOf('@');
+      let domain = res.email.substr(afterAt + 1);
+      const school = await this.schoolService.findByDomain(domain);
+      res.school = school;
+      return res;
     });
   }
+
 
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOne({ email });

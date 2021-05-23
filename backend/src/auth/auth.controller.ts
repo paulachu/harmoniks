@@ -14,7 +14,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Req() req) {
-    console.log(req.user);
+    this.logger.log(req.user.id + ' Wants his profile');
     return this.authService.getAuthInfoUser(req.user);
   }
 
@@ -27,6 +27,7 @@ export class AuthController {
 
   @Post('signup')
   async signUp(@Body() signUpForm: CreateUserDto) {
+    console.log(signUpForm);
     this.logger.log('Incoming signup...');
     return this.authService.signup(signUpForm);
   }

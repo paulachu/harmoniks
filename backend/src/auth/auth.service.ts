@@ -18,7 +18,7 @@ export class AuthService {
 
   async validateLogin(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByEmail(email);
-    if (user && user.password == await crypto.createHmac('sha256', password).digest('hex')) {
+    if (user && user.password == crypto.createHmac('sha256', password).digest('hex')) {
       const { password, ...result } = user;
       return result;
     }
@@ -44,7 +44,8 @@ export class AuthService {
     });
   }
 
-    getAuthInfoUser(user) {
-      return this.usersService.findOne(user.id);
+    async getAuthInfoUser(currentUser) {
+      const currentUserInfo = await this.usersService.findOne(currentUser.id);
+      return {userInfo: currentUserInfo};
     }
 }
