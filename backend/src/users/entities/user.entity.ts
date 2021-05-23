@@ -40,7 +40,7 @@ export class User {
   @JoinColumn()
   school: School;
 
-  @Column({ default: 0, nullable: true })
+  @Column({ default: 0 })
   debt: number;
 
   @ManyToMany((type) => Skill, (skill) => skill.users, { eager: true, nullable: false})
