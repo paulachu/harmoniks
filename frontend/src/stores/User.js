@@ -25,6 +25,7 @@ class UserStore {
             getProfile: action,
             getAllRequests: action,
             getMyRequest: action,
+            getDiscordToken : action,
             postRequest: action,
             deleteRequest : action,
             patchUser: action,
@@ -149,6 +150,27 @@ class UserStore {
                 console.log(err);
                 this.user.history.push("/signin");
             });
+    }
+
+    async getDiscordToken (requestId){
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/request/help/" + requestId,
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+        return axios(params)
+        .then((res) => {
+            if (res.status === 200) {
+                return res.data;
+            }
+            this.user.history.push("/signin");
+        })
+        .catch((err) => {
+            console.log(err);
+            this.user.history.push("/signin");
+        });
     }
 
     async getAllRequests() {

@@ -3,10 +3,23 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
     const red = {backgroundColor : "#C9846F"};
     const green = {backgroundColor : "#8DB0BA"};
+
+    const [loaded, setLoaded] = useState(false);
+    const [discordLink, setDiscordLink] = useState("");
+    useEffect(() => {
+        if (! loaded) {
+            user.getDiscordToken(request.user_from.id)
+            .then(res => {
+                setDiscordLink(res);
+                setLoaded(true);
+            });
+        }
+    },[loaded])
 
     return (
         <div className="container-resume-request">
@@ -40,7 +53,7 @@ const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
                 </div>
 
                 <div className="join-discord">
-                    <a href={request.discordLink} target="_blank" rel="noreferrer">
+                    <a href={discordLink} target="_blank" rel="noreferrer">
                         <img src="/logos/discordLogo.png" className="logo-image"></img>
                     </a>
                 </div>
