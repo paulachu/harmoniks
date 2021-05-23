@@ -11,9 +11,9 @@ const Navigation = ({user}) => {
             <div className="navigation">
                 <img src="/logos/logoBis.svg" className="logo" alt="logo" />
                 <ul className="menu">
-                    <NavLink exact to="/requests">Je veux aider</NavLink>
+                    <NavLink exact to="/requests">I want to help!</NavLink>
                     <span>|</span>
-                    <NavLink exact to="/history">Mes demandes </NavLink>
+                    <NavLink exact to="/history">My requests</NavLink>
                 </ul>
                 <div className="account">
                     <NavLink exact to="/profil" className="name">{user.user.name}</NavLink>
