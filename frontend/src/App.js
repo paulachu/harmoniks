@@ -10,6 +10,7 @@ import user from "./stores/User";
 import Presentation from "./pages/Presentation";
 import Profil from "./pages/Profil";
 import Auth from "./authentication/Auth"; // for requests, history and profil
+import History from "./pages/History";
 
 function App() {
     return (
@@ -22,9 +23,10 @@ function App() {
                             <Route path="/" exact component={Presentation}/>
                             <Route path="/signin" exact component={SignIn} />
                             <Route path="/signup" exact component={SignUp} />
-                            <Route path="/requests" exact component={RequestsPage} />
-                            <Route path="/history" exact component={RequestsPage} />
-                            <Route path="/profil" exact component={Profil} />
+
+                            <Auth path="/requests" exact component={RequestsPage} />
+                            <Auth path="/history" exact component={History} />
+                            <Auth path="/profil" exact component={Profil} />
                             <Redirect to="/" />
                         </Switch>
                     </AnimatePresence>

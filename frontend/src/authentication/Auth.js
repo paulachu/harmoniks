@@ -4,25 +4,16 @@ import { Redirect, Route } from "react-router";
 import { compose } from "recompose";
 
 const Auth = ({ component, user }) => {
-    const Component = component; 
+    const Component = component;
+
     return (
         <Route
             render={(props) => {
-                if (user.isUser || user.cookie.get("user")) {
-                    user.refreshInfo();
-                    return <Component {...props} />;
-                } else {
-                    return (
-                        <Redirect
-                            to={{
-                                pathname: "/signin",
-                            }}
-                        />
-                    );
-                }
+                const res = user.refreshInfo();
+                return <Component {...props} />;
             }}
         />
     );
 };
 
-export default compose(inject('user'), observer)(Auth);
+export default compose(inject("user"), observer)(Auth);

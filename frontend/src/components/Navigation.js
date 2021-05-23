@@ -1,6 +1,6 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
-import { GrUserManager } from "react-icons/gr";
+import { AiOutlineLogout } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import compose from "recompose/compose";
 
@@ -13,11 +13,11 @@ const Navigation = ({user}) => {
                 <ul className="menu">
                     <NavLink exact to="/requests">Je veux aider</NavLink>
                     <span>|</span>
-                    <li>Mes demandes </li>
+                    <NavLink exact to="/history">Mes demandes </NavLink>
                 </ul>
                 <div className="account">
-                    <span className="name">John Doe</span>
-                    <GrUserManager className="account-icon"/>
+                    <NavLink exact to="/profil" className="name">{user.user.name}</NavLink>
+                    <AiOutlineLogout className="account-icon" onClick={() => user.logout()}/>
                 </div>
             </div>
         );
