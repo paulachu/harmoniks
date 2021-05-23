@@ -41,8 +41,6 @@ const InputTags = ({ tags, setTags, limitedToSuggestions, max = 10}) => {
         setTags(tags.filter((tag, index) => index !== i));
     };
     const handleAddition = (elt) => {
-        if (!limitedToSuggestions 
-            || suggestions.findIndex(e => e.tags === elt.tags) !== -1)
             if (max > tags.length)
                 setTags([...tags, elt]);
     };

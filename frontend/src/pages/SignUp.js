@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
+import {imageToBase64} from "image-to-base64";
 
 import InputTags from "../components/InputTags";
 
@@ -147,8 +148,11 @@ const SignUp = ({ user }) => {
                         <label htmlFor="photo">Add a Photo</label>
                         <br />
                         <input
+                            accept="image/png"
                             type="file"
-                            onChange={(e) => setPhoto(e.target.files[0])}
+                            onChange={(e) => {
+                                setPhoto((e.target.files[0]))
+                            }}
                             id="photo"
                         />
                     </div>

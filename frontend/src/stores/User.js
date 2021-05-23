@@ -27,6 +27,7 @@ class UserStore {
             postRequest: action,
             deleteRequest : action,
             patchUser: action,
+            getUser: action,
             isAdmin: computed,
             isUser: computed,
             history: computed,
@@ -107,7 +108,27 @@ class UserStore {
         this.user.isUser = false;
         this.user.history.push("/signin");
     }
-
+    async getUser(user_id)
+    {
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/users/" + user_id,
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 200) {
+                    return res.data;
+                }
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
     async getProfile() {
         const params = {
             method: "get",

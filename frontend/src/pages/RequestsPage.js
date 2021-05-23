@@ -18,7 +18,10 @@ const RequestsPage = ({ user }) => {
                 user.getMyRequest().then((res_bis) => {
                     const my_elt = res_bis.find((e) => e.status === 0); 
                     setMyRequest(my_elt);
-                    setRequests(res.filter(e => JSON.stringify(e) !== JSON.stringify(my_elt)));
+                    if (my_elt)
+                        setRequests(res.filter(e => e.id !== my_elt.id));
+                    else
+                        setRequests(res);
                 });
             });
             // Set Loaded to true

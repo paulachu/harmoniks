@@ -13,6 +13,7 @@
     "framer": "^1.2.30",
     "framer-motion": "^4.1.17",
     "history": "^4.10.1",
+    "image-to-base64": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "material-ui": "^0.20.2",
     "mobx": "^6.3.1",
