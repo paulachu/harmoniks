@@ -8,7 +8,7 @@ import { BotController } from './bot.controller';
   controllers: [BotController],
   imports: [HttpModule,
     DiscordModule.forRoot({
-      token: process.env.TOKEN_BOT,
+      token: 'ODQ1NTUyNzcyNjY0NjU1ODgy.YKioYg.7W9kypU1aO7W6ApL6-Kkd2rWUfM',
       commandPrefix: '$',
       allowGuilds: ['845236496554131456'],
       denyGuilds: [''],
@@ -21,5 +21,6 @@ import { BotController } from './bot.controller';
     }),
   ],
   providers: [BotGateway, BotService],
+  exports: [BotGateway]
 })
 export class BotModule {}
