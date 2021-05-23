@@ -20,8 +20,13 @@ class UserStore {
             login: action,
             fillUser: action,
             refreshInfo: action,
-            logout : action,
-            getProfile : action,
+            logout: action,
+            getProfile: action,
+            getAllRequests: action,
+            getMyRequest: action,
+            postRequest: action,
+            deleteRequest : action,
+            patchUser: action,
             isAdmin: computed,
             isUser: computed,
             history: computed,
@@ -97,15 +102,13 @@ class UserStore {
             });
     }
 
-
     logout() {
         this.cookie.remove("user_token");
         this.user.isUser = false;
         this.user.history.push("/signin");
     }
 
-    async getProfile()
-    {
+    async getProfile() {
         const params = {
             method: "get",
             url: process.env.REACT_APP_URI + "/auth/profile",
@@ -113,14 +116,122 @@ class UserStore {
                 Authorization: "Bearer " + this.user.token,
             },
         };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 200) {
+                    return res.data.userInfo;
+                }
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
+
+    async getAllRequests() {
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/requests",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 200) return res.data;
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
+
+    async getMyRequest() {
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/requests/my",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 200) {
+                    if (res.data.length >= 0) {
+                        return res.data;
+                    }
+                    return null;
+                }
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
+
+    async postRequest(data) {
+        const params = {
+            method: "post",
+            url: process.env.REACT_APP_URI + "/requests",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+            data: data
+        };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 201) 
+                    return res.data;
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
+
+
+    async patchUser(data)
+    {
+        const params = {
+            method: "patch",
+            url: process.env.REACT_APP_URI + "/users",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+            data: data
+        };
+        return axios(params)
+            .then((res) => {
+                if (res.status === 201) 
+                    return res.data;
+                this.user.history.push("/signin");
+            })
+            .catch((err) => {
+                console.log(err);
+                this.user.history.push("/signin");
+            });
+    }
+
+    async deleteRequest() {
+        const params = {
+            method: "delete",
+            url: process.env.REACT_APP_URI + "/requests/my",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+                },
+            }
+        
         return axios(params).then(res => {
             if (res.status === 200)
-            {
-                return res.data.userInfo;
-            }
-            this.user.history.push('/signin');
+                return true;
+            this.user.history.push("/signin");
+
         }).catch(err => {
-            console.log(err);
+            console.log(err)
             this.user.history.push("/signin");
         });
     }
@@ -144,7 +255,7 @@ class UserStore {
                     this.fillUser(my_data);
                     return true;
                 }
-                this.history.push("/signin")
+                this.history.push("/signin");
                 return false;
             })
             .catch((err) => this.history.push("/signin"));

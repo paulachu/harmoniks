@@ -39,12 +39,12 @@ const Profil = ({ user }) => {
                         <p className="debt">Debt: {userProfile.debt}</p>
                         <div className="profil_button_group">
                             <button
-                                className="button_profile"
+                                className={ page === 1 ? "button_profile active" : "button_profile"}
                                 onClick={(e) => changePage(1)}>
                                 Personal data
                             </button>
                             <button
-                                className="button_profile"
+                                className={page === 2 ? "button_profile active" : "button_profile"}
                                 onClick={(e) => changePage(2)}>
                                 Social network
                             </button>
@@ -67,7 +67,7 @@ const Profil = ({ user }) => {
                             <p className="single-profile-info">
                                 <strong>School</strong>
                                 <br />
-                                {"EPITA"}
+                                {userProfile.school.name}
                             </p>
                         </div>
                         <div className="skills">

@@ -24,7 +24,7 @@ export class RequestsController {
   @UseGuards(JwtAuthGuard)
   @Delete("my")
   deleteMyCurrentRequest(@Req() req){
-    return this.requestsService.getRequestsByUser(req.user.id);
+    return this.requestsService.removeRequestByUser(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)
