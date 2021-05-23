@@ -20,23 +20,25 @@ const SignUp = ({ user }) => {
     const handleSignUp = (e) => {
         e.preventDefault();
         const tag_res = [];
-        tags.forEach((tag) => tag_res.push({ tags: tag.tags }));
+        tags.forEach((tag) => tag_res.push(tag.tags));
         const body = {
-            email,
-            skills: tag_res,
-            picture: photo,
-            linkedin_link: linkedin,
-            hooper_link: hooper,
-            discord_id: discord,
-            full_name: name,
+            "email" : email,
+            "skills": tag_res,
+            "picture": photo,
+            "linkedin_link": linkedin,
+            "hopper_link": hooper,
+            "discord_id": discord,
+            "full_name": name,
+            "password":pass
         };
-        const res = user.signup(body);
-        if (!res.failed) {
-            user.history.push("/requests");
-        } else {
-            document.querySelector(".errormsg").innerHTML = res.message;
-            setTags([]);
-        }
+        user.signUp(body).then((res) => {
+            if (!res.failed) {
+                user.history.push("/requests");
+            } else {
+                document.querySelector(".errormsg").innerHTML = res.message;
+                setTags([]);
+            }
+        });
     };
 
     return (
@@ -96,7 +98,7 @@ const SignUp = ({ user }) => {
                         />
                     </div>
                     <div className="hooper">
-                        <label htmlFor="hooper">Hooper</label>
+                        <label htmlFor="hooper">Hopper</label>
                         <br />
                         <input
                             type="text"
@@ -151,8 +153,7 @@ const SignUp = ({ user }) => {
                         />
                     </div>
                     <div>
-                        <div className="errormsg">
-                        </div>
+                        <div className="errormsg"></div>
                         <div className="btns">
                             <div className="submit">
                                 <button type="submit" id="submit">

@@ -8,7 +8,7 @@
     .wrapper-resume-request {
         border-radius : 10px;
         display: grid;
-        grid-template-columns: 40% 15% 10% 15% 15% 15%;
+        grid-template-columns: 40% 15% 5% 15% 12% 13%;
         grid-template-rows: 99%;
         grid-template-areas: "resume skils . status join user";
         background-color: $colorA;
@@ -31,7 +31,7 @@
                 padding: 5px;
                 width: 90%;
                 height:80px;
-                border: 2px solid #fff;
+                border: 2px solid $colorB;
                 border-radius: 10px;
             }
         }
@@ -46,7 +46,7 @@
             .wrapper-skils{
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
+                justify-content: space-evenly;
                 flex-wrap: wrap;
                 width: 100%;
                 margin: auto auto;
@@ -58,9 +58,73 @@
             }
         }
 
+        .title
+        {
+            color: $colorB;
+        }
+
         .status
         {
             grid-area: status;
+            margin-top: 184px;
+
+            .content-status {
+                color: $colorForm;
+                align-self: center;
+                width: 50%;
+                margin-left: 50%;
+                padding: 10px;
+                padding-left: 20px;
+                padding-right: 20px;
+                background-color: $colorC;
+            }
+
+
+        }
+
+        .join-discord{
+            grid-area: join;
+
+
+            .logo-image {
+                margin: auto;
+                width: 80%;
+                margin-top: 163px;
+                transition: all 200ms ease-out;
+            }
+
+            .logo-image:hover {
+                width: 86%;
+                cursor: pointer;
+                opacity: 0,7;
+            }
+        }
+
+        .user{
+            grid-area: user;
+            margin-top : 40px;
+
+            .user-image {
+                border-radius: 50%;
+                width : 80%;
+                margin: auto;
+                margin-top: 10px;
+                padding : 5px;
+                transition: all 200ms ease-out;
+            }
+
+            .user-image:hover {
+                width: 86%;
+                cursor: pointer;
+                opacity: 0,7;
+            }
+
+            .textbot {
+                color: $colorForm;
+                align-self: center;
+                width: 50%;
+                margin-left: 25px;
+            }
         }
     }
 }

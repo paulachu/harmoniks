@@ -12,14 +12,15 @@ class UserStore {
         name: null,
         debt: 0,
         history: null,
-        token: null
+        token: null,
     };
     constructor() {
         makeObservable(this, {
             user: observable,
             login: action,
             fillUser: action,
-            refreshInfo : action,
+            refreshInfo: action,
+            logout : action,
             isAdmin: computed,
             isUser: computed,
             history: computed,
@@ -42,75 +43,90 @@ class UserStore {
 
     fillUser(data) {
         this.user.isUser = true;
-        this.user.name = data.full_name;
-        this.user.isAdmin = data.isAdmin;
-        this.user.debt = data.debt;
+        this.user.name = data.userInfo.full_name;
+        this.user.isAdmin = data.userInfo.isAdmin;
+        this.user.debt = data.userInfo.debt;
         // ADD COOKIE
         this.user.token = data.access_token;
         this.cookie.set("user_token", this.user.token);
     }
 
-
     // handling user login
-    async login(email, password) {
+    login(email, password) {
         const params = {
-            method: "post",
             url: process.env.REACT_APP_URI + "/auth/signin",
-            withCredentials: true,
+            method: "POST",
             data: {
                 email,
                 password,
             },
         };
-        await axios(params)
+        return axios(params)
             .then((res) => {
-                if (res.status !== 200)
-                    return { failed: true, message: res.data.error };
+                if (res.status !== 201)
+                    return { failed: true, message: res.data.message };
                 this.fillUser(res.data);
                 return { failed: false, message: "SUCCESS" };
             })
             .catch((err) => {
-                return { failed: true, message: "API error" };
+                return { failed: true, message: err.message };
             });
     }
 
     // handling user login
-    async signUp(data) {
+    signUp(data) {
         const params = {
-            method: "post",
+            method: "POST",
             url: process.env.REACT_APP_URI + "/auth/signup",
-            withCredentials: true,
-            data,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: data,
         };
-        await axios(params)
+        return axios(params)
             .then((res) => {
-                if (res.status !== 301)
-                    return { failed: true, message: res.message };
+                if (res.status !== 201)
+                    return { failed: true, message: res.data.message };
                 this.fillUser(res.data);
                 return { failed: false, message: "SUCCESS" };
             })
             .catch((err) => {
                 console.log(err);
-                return { failed: true, message: "API error" };
+                return { failed: true, message: err.message };
             });
     }
 
-    refreshInfo() {
+
+    logout() {
+        this.cookie.remove("user_token");
+        this.user.isUser = false;
+        this.user.history.push("/signin");
+    }
+
+    async refreshInfo() {
         this.user.token = this.cookie.get("user_token");
         const params = {
             method: "get",
             url: process.env.REACT_APP_URI + "/auth/profile",
-            Authorization : "Bearer " + this.user.token,
-            withCredentials: true,
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
         };
-        axios(params)
-        .then(res => {
-            if (res.status === 200)
-                this.fillUser(res.data)
-            else 
-                this.history.push("/signin");
-        })
-        .catch(this.history.push("/signin"));
+        const res = await axios(params)
+            .then((res) => {
+                if (res.status === 200) {
+                    const my_data = {
+                        ...res.data,
+                        access_token: this.cookie.get("user_token"),
+                    };
+                    this.fillUser(my_data);
+                    return true;
+                }
+                this.history.push("/signin")
+                return false;
+            })
+            .catch((err) => this.history.push("/signin"));
+        return res;
     }
 }
 
