@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 const ResumeRequest = ({request, isMine = false, handleDelete}) => {
-    var statusValue = 1;
     const red = {backgroundColor : "#C9846F"};
     const green = {backgroundColor : "#8DB0BA"};
+
     return (
         <div className="container-resume-request">
             {
@@ -20,7 +20,7 @@ const ResumeRequest = ({request, isMine = false, handleDelete}) => {
                     </label>
                 </div>
                 <div className="status">
-                    <label style={statusValue < 0 ? red : green} className="content-status">{statusValue}</label>
+                    <label style={request.user_from.debt < 0 ? red : green} className="content-status">{request.user_from.debt}</label>
                 </div>
 
                 <div className="skils">
