@@ -23,6 +23,7 @@ export class ProjectController {
   {
     return this.projectService.findByUserId(req.user.id);
   }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.projectService.findOne(+id);

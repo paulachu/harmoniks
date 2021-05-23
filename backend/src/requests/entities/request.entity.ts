@@ -33,4 +33,7 @@ export class Request {
 
     @Column({nullable: true})
     discordLink: string;
+
+    @Column({nullable: true})
+    realDiscordLink: string;
 }

@@ -11,7 +11,7 @@ export class BotGateway {
   constructor() {
     setInterval(() => {
       this.cleanChannels();
-    }, /*60000*/30000);
+    }, /*60000*/300000);
   }
 
   private cleanChannels() {

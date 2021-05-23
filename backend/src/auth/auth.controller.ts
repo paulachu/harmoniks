@@ -26,7 +26,8 @@ export class AuthController {
   }
 
   @Post('signup')
-  async signUp(@Body() signUpForm: CreateUserDto) {
+  async signUp(@Body() signUpForm) {
+    this.logger.debug(signUpForm);
     console.log(signUpForm);
     this.logger.log('Incoming signup...');
     return this.authService.signup(signUpForm);

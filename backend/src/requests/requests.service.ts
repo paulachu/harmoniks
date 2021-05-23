@@ -36,7 +36,8 @@ export class RequestsService {
     if (createRequestDto.skills) {
       newRequest.skills = await this.skillsService.getSkills(createRequestDto.skills)
     }
-    newRequest.discordLink = await this.botGateway.afterPostingRequest(newRequest.user_from.discord_id);
+    newRequest.discordLink = `${process.env.BACKEND_URL}/requests/help/${newRequest.id}`;
+    newRequest.realDiscordLink = await this.botGateway.afterPostingRequest(newRequest.user_from.discord_id);
     return this.requestRepository.save(newRequest).catch(err => {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
@@ -135,8 +136,10 @@ export class RequestsService {
   async helpSomeone(requestId: number, helperUserId: number) {
     let currentRequest = await this.findOne(requestId);
     let neederUser = currentRequest.user_from;
-    let helperUser = await this.usersService.findOne(helperUserId);
-    await this.botGateway.helperWantToJoin(neederUser.discord_id, helperUser.discord_id);
+    if (neederUser.id !== helperUserId) {
+      let helperUser = await this.usersService.findOne(helperUserId);
+      await this.botGateway.helperWantToJoin(neederUser.discord_id, helperUser.discord_id);
+    }
     return currentRequest.discordLink;
   }
 }

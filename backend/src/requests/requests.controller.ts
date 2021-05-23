@@ -70,4 +70,10 @@ export class RequestsController {
     let discordLink = await this.requestsService.helpSomeone(+requestId, req.user);
     res.redirect(discordLink);
   }
+
+  /*@UseGuards(JwtAuthGuard)
+  @Get('helpedMe/:requestId')
+  async helpedMe(@Param('requestId') requestId: string, @Req() req) {
+    this.requestsService.
+  }*/
 }
