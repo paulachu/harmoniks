@@ -13,6 +13,7 @@ class UserStore {
         debt: 0,
         history: null,
         token: null,
+        visit : null
     };
     constructor() {
         makeObservable(this, {

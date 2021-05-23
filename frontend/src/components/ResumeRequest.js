@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { compose } from "recompose";
+import { inject, observer } from "mobx-react";
+import { Link } from 'react-router-dom';
 
-const ResumeRequest = ({request, isMine = false, handleDelete}) => {
+const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
     const red = {backgroundColor : "#C9846F"};
     const green = {backgroundColor : "#8DB0BA"};
 
@@ -42,13 +45,13 @@ const ResumeRequest = ({request, isMine = false, handleDelete}) => {
                     </a>
                 </div>
 
-                <div className="user">
+                <Link to={`/profil?${request.user_from.id}`} className="user">
                     <img src="/logos/userImg.jpeg" className="user-image"></img>
                     <label className="textbot">{request.user_from.full_name}</label>
-                </div>
+                </Link>
             </div>
         </div>
     );
 };
 
-export default ResumeRequest;
+export default compose(inject("user"), observer)(ResumeRequest);

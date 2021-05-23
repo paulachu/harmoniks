@@ -2,21 +2,35 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
-const Profil = ({ user }) => {
+import { useHistory } from 'react-router-dom';
+const Profil = ({ user , match}) => {
     const [page, setpage] = useState(1);
     const changePage = (e) => {
         setpage(e);
     };
-
+    
     const [loaded, setLoaded] = useState(false);
     const [userProfile, setUserProfile] = useState(null);
-
     useEffect(() => {
         if (!loaded) {
-            user.getProfile().then((res) => {
-                setLoaded(true);
-                setUserProfile({ ...res });
-            });
+            let id = window.location.search;
+            if (id)
+            {
+                const id_final = id.slice(1);
+                console.log(id_final);
+                user.getUser(id_final).then((res) => {
+                    setUserProfile({...res});
+                    setLoaded(true);
+                    user.user.visit = null;
+                });
+            }
+            else
+            {
+                user.getProfile().then((res) => {
+                    setLoaded(true);
+                    setUserProfile({ ...res });
+                });
+            }
         }
     }, [loaded]);
 
@@ -94,22 +108,22 @@ const Profil = ({ user }) => {
                                 {userProfile.discord_id}
                             </p>
                             <p className="single-profile-info">
+                                <a href={userProfile.linkedin_link}
+                                   target="_blank" rel="noreferrer">
                                 <img
                                     width="100px"
                                     src="/logos/linkedin_logo.png"></img>
                                 <br />
-                                <a href={userProfile.linkedin_link}
-                                   target="_blank" rel="noreferrer">
-                                    {userProfile.linkedin_link}
+                                LinkedIn
                                 </a>
                             </p>
                             <p className="single-profile-info">
-                                <img
-                                    width="100px"
-                                    src="/logos/hopper_logo.png"></img>
-                                <br />
                                 <a href={userProfile.hopper_link} target="_blank" rel="noreferrer">
-                                    {userProfile.hopper_link}
+                                    <img
+                                        width="100px"
+                                        src="/logos/hopper_logo.png"></img>
+                                    <br/>
+                                    Hopper
                                 </a>
                             </p>
                         </div>

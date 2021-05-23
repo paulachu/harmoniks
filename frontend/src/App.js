@@ -26,6 +26,7 @@ function App() {
 
                             <Auth path="/requests" exact component={RequestsPage} />
                             <Auth path="/history" exact component={History} />
+                            <Auth path={`/profil/:id`} component={Profil} />
                             <Auth path="/profil" exact component={Profil} />
                             <Redirect to="/" />
                         </Switch>
