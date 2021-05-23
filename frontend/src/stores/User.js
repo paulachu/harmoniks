@@ -125,6 +125,17 @@ class UserStore {
         });
     }
 
+    async getAllRequests()
+    {
+        const params = {
+            method: "get",
+            url: process.env.REACT_APP_URI + "/auth/profile",
+            headers: {
+                Authorization: "Bearer " + this.user.token,
+            },
+        };
+    }
+
     async refreshInfo() {
         this.user.token = this.cookie.get("user_token");
         const params = {
