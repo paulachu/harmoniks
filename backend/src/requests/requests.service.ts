@@ -8,6 +8,7 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { UpdateRequestDto } from './dto/update-request.dto';
 import { Request } from './entities/request.entity';
+import { BotGateway } from '../bot/bot.gateway';
 
 
 @Injectable()
@@ -16,7 +17,8 @@ export class RequestsService {
 
   constructor(@InjectRepository(Request)
               private requestRepository: Repository<Request>, private skillsService: SkillsService,
-              private usersService: UsersService) {
+              private usersService: UsersService,
+              private botGateway: BotGateway) {
   }
 
 
@@ -34,6 +36,7 @@ export class RequestsService {
     if (createRequestDto.skills) {
       newRequest.skills = await this.skillsService.getSkills(createRequestDto.skills)
     }
+    newRequest.discordLink = await this.botGateway.afterPostingRequest(newRequest.user_from.discord_id);
     return this.requestRepository.save(newRequest).catch(err => {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
@@ -127,5 +130,13 @@ export class RequestsService {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     });
+  }
+
+  async helpSomeone(requestId: number, helperUserId: number) {
+    let currentRequest = await this.findOne(requestId);
+    let neederUser = currentRequest.user_from;
+    let helperUser = await this.usersService.findOne(helperUserId);
+    await this.botGateway.helperWantToJoin(neederUser.discord_id, helperUser.discord_id);
+    return currentRequest.discordLink;
   }
 }

@@ -30,4 +30,7 @@ export class Request {
 
     @Column({nullable: false, default: () => "CURRENT_TIMESTAMP", type: "timestamp"})
     createdAt: Date;
+
+    @Column({nullable: true})
+    discordLink: string;
 }
