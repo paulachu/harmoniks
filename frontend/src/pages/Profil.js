@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
-import { useHistory } from 'react-router-dom';
+
 const Profil = ({ user , match}) => {
     const [page, setpage] = useState(1);
     const changePage = (e) => {
@@ -48,7 +48,7 @@ const Profil = ({ user , match}) => {
                                 src="https://i.pinimg.com/originals/57/46/4b/57464be6ba5d2c040d56ae928eb977a5.png"
                                 width="150px"
                                 height="150px"
-                                className="img-profile"></img>
+                                className="img-profile" alt="profile"></img>
                         </div>
                         <p className="debt">Debt: {userProfile.debt}</p>
                         <div className="profil_button_group">
@@ -76,7 +76,7 @@ const Profil = ({ user , match}) => {
                             <p className="single-profile-info">
                                 <strong>Email</strong>
                                 <br />
-                                {userProfile.email}
+                                <a href={"mailto:" + userProfile.email}>{userProfile.email}</a>
                             </p>
                             <p className="single-profile-info">
                                 <strong>School</strong>
@@ -103,7 +103,8 @@ const Profil = ({ user , match}) => {
                             <p className="single-profile-info">
                                 <img
                                     width="100px"
-                                    src="/logos/discord_logo.png"></img>
+                                    src="/logos/discord_logo.png"
+                                    alt="profilepicture"></img>
                                 <br />
                                 {userProfile.discord_id}
                             </p>
@@ -112,7 +113,8 @@ const Profil = ({ user , match}) => {
                                    target="_blank" rel="noreferrer">
                                 <img
                                     width="100px"
-                                    src="/logos/linkedin_logo.png"></img>
+                                    src="/logos/linkedin_logo.png"
+                                    alt="linkedin"></img>
                                 <br />
                                 LinkedIn
                                 </a>
@@ -121,7 +123,8 @@ const Profil = ({ user , match}) => {
                                 <a href={userProfile.hopper_link} target="_blank" rel="noreferrer">
                                     <img
                                         width="100px"
-                                        src="/logos/hopper_logo.png"></img>
+                                        src="/logos/hopper_logo.png"
+                                        alt="hooper"></img>
                                     <br/>
                                     Hopper
                                 </a>
