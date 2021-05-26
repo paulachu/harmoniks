@@ -67,8 +67,9 @@ export class RequestsController {
   @UseGuards(JwtAuthGuard)
   @Get('help/:requestId')
   async helpSomeone(@Param('requestId') requestId: string, @Req() req, @Res() res: Response) {
-    let discordLink = await this.requestsService.helpSomeone(+requestId, req.user);
-    res.redirect(discordLink);
+    let discordLink = this.requestsService.helpSomeone(+requestId, req.user);
+    console.log(discordLink);
+    return discordLink;
   }
 
   /*@UseGuards(JwtAuthGuard)

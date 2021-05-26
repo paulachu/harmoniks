@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
 import { useHistory } from 'react-router-dom';
+
+
 const Profil = ({ user , match}) => {
     const [page, setpage] = useState(1);
     const changePage = (e) => {
@@ -131,7 +133,7 @@ const Profil = ({ user , match}) => {
                 )}
             </motion.div>
         );
-    return <></>;
+    return <div>No</div>;
 };
 
 export default compose(inject("user"), observer)(Profil);

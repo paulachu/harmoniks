@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger, NotImplementedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSkillDto } from 'src/skills/dto/create-skill.dto';
 import { Skill } from 'src/skills/entities/skill.entity';
@@ -36,9 +36,13 @@ export class RequestsService {
     if (createRequestDto.skills) {
       newRequest.skills = await this.skillsService.getSkills(createRequestDto.skills)
     }
-    newRequest.discordLink = `${process.env.BACKEND_URL}/requests/help/${newRequest.id}`;
     newRequest.realDiscordLink = await this.botGateway.afterPostingRequest(newRequest.user_from.discord_id);
-    return this.requestRepository.save(newRequest).catch(err => {
+    return this.requestRepository.save(newRequest).then(res => {
+      res.discordLink = `${process.env.BACKEND_URL}/requests/help/${res.id}`;
+      let fixedRequest = this.requestRepository.save(res);
+      console.log(fixedRequest);
+      return fixedRequest;
+    }).catch(err => {
       this.logger.error(err);
       throw new HttpException("error: " + err.message, HttpStatus.INTERNAL_SERVER_ERROR)
     });
@@ -133,13 +137,16 @@ export class RequestsService {
     });
   }
 
-  async helpSomeone(requestId: number, helperUserId: number) {
+  async helpSomeone(requestId: number, helperUserInfo: {email: string, id: number}) {
     let currentRequest = await this.findOne(requestId);
+    if (!currentRequest) {
+      throw new NotImplementedException();
+    }
     let neederUser = currentRequest.user_from;
-    if (neederUser.id !== helperUserId) {
-      let helperUser = await this.usersService.findOne(helperUserId);
+    if (neederUser.id !== helperUserInfo.id) {
+      let helperUser = await this.usersService.findOne(helperUserInfo.id);
       await this.botGateway.helperWantToJoin(neederUser.discord_id, helperUser.discord_id);
     }
-    return currentRequest.discordLink;
+    return currentRequest.realDiscordLink;
   }
 }

@@ -152,17 +152,20 @@ class UserStore {
             });
     }
 
-    async getDiscordToken (requestId){
+    getDiscordToken (requestId) {
         const params = {
             method: "get",
-            url: process.env.REACT_APP_URI + "/request/help/" + requestId,
+            url: process.env.REACT_APP_URI + "/requests/help/" + requestId,
             headers: {
                 Authorization: "Bearer " + this.user.token,
             },
         };
         return axios(params)
         .then((res) => {
+            console.log(res);
             if (res.status === 200) {
+                console.log("je passe la");
+                console.log(res.data);
                 return res.data;
             }
             this.user.history.push("/signin");

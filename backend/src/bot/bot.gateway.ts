@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { Client, ClientProvider, Once, OnCommand } from 'discord-nestjs';
 import { CategoryChannel, Message, User } from 'discord.js';
 
@@ -8,13 +8,16 @@ export class BotGateway {
   private readonly guildIdFromWebhook = '845236496554131456';
   private readonly createdChannels = [];
 
+  @Client()
+  private readonly discordProvider: ClientProvider;
+
   constructor() {
     setInterval(() => {
       this.cleanChannels();
-    }, /*60000*/300000);
+    }, 6000/*300000*/);
   }
 
-  private cleanChannels() {
+  private async cleanChannels() {
     for (const channel of this.createdChannels) {
       if (channel.deletable) {
         this.createdChannels.splice(this.createdChannels.indexOf(channel), 1);
@@ -23,10 +26,15 @@ export class BotGateway {
         });
       }
     }
+    /*let channels = await (await this.discordProvider.getClient().guilds.fetch(this.guildIdFromWebhook)).channels;
+    for (const channel of channels.cache) {
+      if (channel[1].name === 'textuel' || channel[1].name === 'vocal') {
+        channel[1].delete('Session experied');
+      }
+    }*/
   }
 
-  @Client()
-  private readonly discordProvider: ClientProvider;
+
 
   @Once({ event: 'ready' })
   onReady(): void {
@@ -93,8 +101,13 @@ export class BotGateway {
   }
 
   private async setPermissionsToChanelForUser(categoryChannel: CategoryChannel, userInfo: User): Promise<CategoryChannel> {
-    await categoryChannel.updateOverwrite(categoryChannel.guild.roles.everyone, {VIEW_CHANNEL: false});
-    await categoryChannel.updateOverwrite(userInfo.id, {VIEW_CHANNEL: true});
+    try {
+      await categoryChannel.updateOverwrite(categoryChannel.guild.roles.everyone, {VIEW_CHANNEL: false});
+      await categoryChannel.updateOverwrite(userInfo.id, {VIEW_CHANNEL: true});
+    }
+    catch(e) {
+      this.logger.error(e);
+    }
     return categoryChannel;
   }
 
@@ -110,6 +123,9 @@ export class BotGateway {
 
   async afterPostingRequest(userDiscordId: string) {
       const userInfo = await this.findUser(userDiscordId);
+      if (!userInfo) {
+        throw new HttpException('User not found in discord server', 404);
+      }
       const categoryChannel = await this.createFullChannelForUser(userDiscordId);
       const categoryChannelWithPermission = await this.setPermissionsToChanelForUser(categoryChannel, userInfo);
       const inviteUrl = await this.getInviteForChannel(categoryChannelWithPermission);

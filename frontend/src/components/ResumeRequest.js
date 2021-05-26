@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { compose } from "recompose";
 import { inject, observer } from "mobx-react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
+import axios from 'axios';
+
+
 
 const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
     const red = {backgroundColor : "#C9846F"};
@@ -12,12 +15,18 @@ const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
     const [loaded, setLoaded] = useState(false);
     const [discordLink, setDiscordLink] = useState("");
     useEffect(() => {
+        console.log('use effect')
         if (! loaded) {
-            user.getDiscordToken(request.user_from.id)
-            .then(res => {
+            console.log('not loaded');            
+            let tmp = user.getDiscordToken(request.id).then(res => {
+                console.log(res);
                 setDiscordLink(res);
                 setLoaded(true);
+            }).catch(err => {
+                console.log(err);
             });
+            console.log(tmp);
+            console.log('done');
         }
     },[loaded])
 
@@ -53,7 +62,7 @@ const ResumeRequest = ({user, request, isMine = false, handleDelete}) => {
                 </div>
 
                 <div className="join-discord">
-                    <a href={discordLink} target="_blank" rel="noreferrer">
+                    <a href={discordLink} target="_blank" rel="noreferrer" >
                         <img src="/logos/discordLogo.png" className="logo-image"></img>
                     </a>
                 </div>

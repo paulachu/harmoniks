@@ -9,7 +9,6 @@ const RequestsPage = ({ user }) => {
     const [loaded, setLoaded] = useState(false);
     const [requests, setRequests] = useState([]);
     const [myRequest, setMyRequest] = useState(null);
-
     useEffect(() => {
         if (!loaded) {
             // Get All request in resquests
